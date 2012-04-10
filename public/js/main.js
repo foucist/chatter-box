@@ -23,14 +23,14 @@ Backbone.sync = function (method, model, options) {
 var AppRouter = Backbone.Router.extend({
 
     routes:{
-        ""                      :   "channel_select",
+        ""                      :   "login",
         "login"                 :   "login",
         "signup"                :   "signup",
         "select_channel"        :   "select_channel",
         "select_program"        :   "select_program",        //what is the program id?
         "show_program_activity" :   "show_program_activity", //what is the channel id? program id? 
-        "show_discussion_board" :   "show_discussion_board",    //what show id this message board for?
-        "show_discussion"       :   "show_discussion",
+        "show_discussions"      :   "show_discussions",    //what show id this message board for?
+        "show_discussion/:id/comments"   :   "show_comments",
         "add_discussion_topic"  :   "add_discussion",
         "reply_to_discussion"   :   "reply_to_discussion",
         "show_program_merchandise": "show_program_merchandise",
@@ -111,14 +111,23 @@ var AppRouter = Backbone.Router.extend({
         this.slidePage(new ShowProgramActivityPage().render());
     },   
 
-    show_discussion_board:function() {
+    show_discussions:function() {
         var self = this;
-        this.slidePage(new ShowDiscussionBoardPage().render());
+
+// We keep a single instance of the DiscussionPage and its associated Discussion collection throughout the app<-- not the case
+        this.discussionsCollection = new DiscussionsCollection();
+        this.discussionsCollection.loadData(1);
+        this.discussionsPage = new ShowDiscussionsPage({model: this.discussionsCollection});
+        this.slidePage(this.discussionsPage.render());
     },   
 
-    show_discussion:function() {
+    show_comments:function(id) {
         var self = this;
-        this.slidePage(new ShowDiscussionPage().render());
+
+        this.commentsCollection = new CommentsCollection();
+        this.commentsCollection.loadData(1);
+        this.commentsPage = new ShowCommentsPage({model: this.commentsCollection});
+        this.slidePage(this.commentsPage.render());
     },   
 
     show_program_merchandise:function() {
@@ -183,7 +192,7 @@ var AppRouter = Backbone.Router.extend({
 
 $(document).ready(function () {
     tpl.loadTemplates(  [ 'login','signup','select_channel','select_program','show_program_activity', 
-                          'show_discussion_board', 'show_discussion', 'show_program_merchandise', 'show_chat'
+                          'show_discussions', 'discussion-list-item','show_comments', 'comment-list-item','show_program_merchandise', 'show_chat'
                         ],
         function () {
             app = new AppRouter();
