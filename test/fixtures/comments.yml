@@ -3,13 +3,11 @@
 one:
   user_id: 1
   discussion_id: 1
-  reply_to_id: 1
   body: MyText
   deleted: false
 
 two:
   user_id: 1
   discussion_id: 1
-  reply_to_id: 1
   body: MyText
   deleted: false
