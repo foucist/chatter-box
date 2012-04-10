@@ -1,4 +1,6 @@
 Chatterbox::Application.routes.draw do
+  devise_for :users
+
   resources :discussions do
     resources :comments
   end
