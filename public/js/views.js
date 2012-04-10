@@ -127,28 +127,89 @@ window.ShowProgramActivityPage = Backbone.View.extend({
     },
 });
 
-window.ShowDiscussionBoardPage = Backbone.View.extend({
+window.ShowDiscussionsPage = Backbone.View.extend({
 
     initialize:function () {
-        this.template = _.template(tpl.get('show_discussion_board'));
+        this.template = _.template(tpl.get('show_discussions'));
     },
     //this.model is a collection here
     render:function (eventName) {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.model.toJSON()));
+        this.listView = new DiscussionListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
+        this.listView.render();
         return this;
     },
 });
 
-window.ShowDiscussionPage = Backbone.View.extend({
+window.DiscussionListView = Backbone.View.extend({
 
     initialize:function () {
-        this.template = _.template(tpl.get('show_discussion'));
+        this.model.bind("reset", this.render, this);
+    },
+
+    render:function (eventName) {
+        $(this.el).empty();
+        _.each(this.model.models, function (discussion) {
+            $(this.el).append(new DiscussionListItemView({model:discussion}).render().el);
+        }, this);
+        return this;
+    }
+});
+
+window.DiscussionListItemView = Backbone.View.extend({
+    tagName:"li",
+    initialize:function () {
+        this.template = _.template(tpl.get('discussion-list-item'));
+    },
+
+    render:function (eventName) {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
+});
+
+window.ShowCommentsPage = Backbone.View.extend({
+
+    initialize:function () {
+        this.template = _.template(tpl.get('show_comments'));
     },
     //this.model is a collection here
-    render:function (eventName) {
-        $(this.el).html(this.template());
+    render:function (eventName) { 
+
+        var commentsCollectionJSON = this.model.toJSON();
+        commentsCollectionJSON.discussion_id = commentsCollectionJSON[0].discussion_id;
+        $(this.el).html(this.template(commentsCollectionJSON));
+        this.listView = new CommentListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
+        this.listView.render();
         return this;
     },
+});
+
+window.CommentListView = Backbone.View.extend({
+
+    initialize:function () {
+        this.model.bind("reset", this.render, this);
+    },
+
+    render:function (eventName) {
+        $(this.el).empty();
+        _.each(this.model.models, function (comment) {
+            $(this.el).append(new CommentListItemView({model:comment}).render().el);
+        }, this);
+        return this;
+    }
+});
+
+window.CommentListItemView = Backbone.View.extend({
+    tagName:"li",
+    initialize:function () {
+        this.template = _.template(tpl.get('comment-list-item'));
+    },
+
+    render:function (eventName) {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
 });
 
 window.ShowMerchandisePage = Backbone.View.extend({
