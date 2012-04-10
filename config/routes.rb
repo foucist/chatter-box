@@ -1,7 +1,7 @@
 Chatterbox::Application.routes.draw do
-  resources :comments
-
-  resources :discussions
+  resources :discussions do
+    resources :comments
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,23 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Program:</b>
-  <%= @discussion.program_id %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @discussion.user_id %>
-</p>
-
-<p>
   <b>Title:</b>
   <%= @discussion.title %>
 </p>
 
 <p>
-  <b>Deleted:</b>
-  <%= @discussion.deleted %>
+ <% @discussion.comments.each do |comment| %>
+   <div>
+     <%= comment.body %>
+   </div>
+ <% end %>
 </p>
 
 
