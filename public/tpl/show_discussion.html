@@ -1,0 +1,108 @@
+<div data-role="page">
+
+	<div data-role="header" data-position="fixed">
+    	<a data-icon="arrow-l" data-rel="back">Back</a>
+        <h1>MESSAGE BOARD</h1>	
+	</div><!-- /header -->
+
+    <style>
+        .messageboard #title {
+        z-index: 99;
+        position: relative;
+        padding:10px 0;
+        margin:40px 0 0 0;
+        text-align: center;
+        color: white;
+        text-shadow: 0 -1px 0 black;
+        background: rgba(0, 0, 0, .9);
+
+        }
+        .messageboard_topic ul li{
+        	padding:0;
+        }
+        .messageboard_topic ul {
+        	margin:0;
+        }
+        .messageboard ul li .level1_txt{
+        	float:left;
+        	font-size:16px;
+        	width:260px;
+        	font-weight:normal;
+        	padding:10px 0 10px 5px;
+        }
+        .messageboard ul li .level2_txt{
+        	float:left;
+        	font-size:14px;
+        	width:240px;
+        	margin-left:20px;
+        	padding:10px 0 10px 5px;
+        	font-weight:normal;
+        }
+        .messageboard ul li .level3_txt{
+        	float:left;
+        	font-size:14px;
+        	width:220px;
+        	margin-left:40px;
+        	font-weight:normal;
+        	padding:10px 0 10px 5px;
+        }
+        .messageboard .caption{
+        	font-size:10px;
+        	line-height:14px;
+        	color:#999;
+        	margin-top:-5px;
+        }
+        .tabred{
+        	border-left:5px solid red;
+        }
+        .tabgreen{
+        	border-left:5px solid green;
+        }
+    </style>
+	<div class="messageboard messageboard_topic" data-role="content">	
+    	<div class="coverphoto" id="entourage">
+        </div>
+        <h2 id="title">Least likeable character?</h2>
+		<ul>
+        	<li class="clearfix">
+            	<div class="level1_txt tabred">
+                	<div class="caption">posted by username, 1h ago</div>
+                    Dom gets my vote.  Just did not like him at all. 
+                </div>
+            	<div class="icon" id="edit"></div>
+            </li>
+            <li class="clearfix">
+            	<div class="level2_txt tabred">
+                	<div class="caption">posted by username, 1h ago</div>
+                    The season Ari was abusing Lloyd, I found Ari to be totally dispicable. He mellowed later, though, and I suppose Ari apologists would argue that he acted like a total prick for Lloyd's own good. I don't agree.
+                </div>
+            	<div class="icon" id="edit"></div>
+            </li>
+            <li class="clearfix">
+            	<div class="level2_txt tabred">
+                	<div class="caption">posted by username, 1h ago</div>
+                    Mandy Moore...
+                </div>
+            	<div class="icon" id="edit"></div>
+            </li>
+             <li class="clearfix">
+            	<div class="level3_txt tabred">
+                	<div class="caption">posted by username, 1h ago</div>
+                    I didn't like her either!
+                </div>
+            </li>
+            <li class="clearfix">
+            	<div class="level1_txt tabgreen">
+                	<div class="caption">posted by username, 1h ago</div>
+                    Easily Ashley. Easily.
+                </div>
+            	<div class="icon" id="edit"></div>
+            </li>
+        </ul>
+	</div><!-- /content -->
+	<div data-role="footer" data-position="fixed">
+  
+        <textarea name="textarea" id="textarea-a" style="width:70%; height:25px; float:left; border-radius: 0;">Add a comment here...</textarea>
+        <a href="index.html" data-role="button" data-inline="true" data-theme="b" data-mini="true">Send</a>
+	</div><!-- /footer -->
+</div><!-- /page -->
