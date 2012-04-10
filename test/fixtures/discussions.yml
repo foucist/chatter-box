@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  program_id: 1
+  user_id: 1
+  title: MyString
+  deleted: false
+
+two:
+  program_id: 1
+  user_id: 1
+  title: MyString
+  deleted: false
