@@ -1,6 +1,7 @@
 // Overriding Backbone's sync method. We replace the default RESTful services-based implementation
 // with a simple in-memory approach so that this sample doesn't have a dependency on remote services.
 Backbone.sync = function (method, model, options) {
+    alert("hey girl!");
     switch (method) {
         case "read":
             if (model.id) {
@@ -17,6 +18,9 @@ Backbone.sync = function (method, model, options) {
         case "update":
             store.saveAnswer(model);
             break;
+        case "create":
+            alert("create something");
+            break;
     }
 };
 
@@ -27,14 +31,16 @@ var AppRouter = Backbone.Router.extend({
         "login"                 :   "login",
         "signup"                :   "signup",
         "select_channel"        :   "select_channel",
-        "select_program"        :   "select_program",        //what is the program id?
-        "show_program_activity" :   "show_program_activity", //what is the channel id? program id? 
-        "show_discussions"      :   "show_discussions",    //what show id this message board for?
-        "show_discussion/:id/comments"   :   "show_comments",
-        "add_discussion_topic"  :   "add_discussion",
-        "reply_to_discussion"   :   "reply_to_discussion",
-        "show_program_merchandise": "show_program_merchandise",
-        "show_chat"             :   "show_chat"
+        "channel/:channel_id"   :   "select_program",        //what is the program id?
+        
+        "program/:program_id"                   :   "show_program_activity", //what is the channel id? program id? 
+        "program/:program_id/show_discussions"  :   "show_discussions",    //what show id this message board for?
+        "program/:program_id/show_merchandise"  :   "show_merchandise", 
+        "program/:program_id/show_chat"         :   "show_chat",
+
+        "discussion/add"                   :   "add_discussion", 
+        "discussion/:discussion_id"        :   "show_comments", 
+        "discussion/:discussion_id/add"    :   "add_comment"
     },
 
     initialize: function() {
@@ -44,7 +50,7 @@ var AppRouter = Backbone.Router.extend({
         // Keep track of the history of pages (we only store the page URL). Used to identify the direction
         // (left or right) of the sliding transition between pages.
         this.pageHistory = [];
-
+        this.activePage = null;
         // Register event listener for back button throughout the app
         $('#content').on('click', '.header-back-button', function(event){
             window.history.back();
@@ -69,6 +75,10 @@ var AppRouter = Backbone.Router.extend({
                 self.deselectItem(event);
             });
         }
+
+        $('#content').on("createDiscussion", function() {
+            alert("about to create discussion object");
+        }); 
     },
 
     selectItem:function(event) {
@@ -98,44 +108,71 @@ var AppRouter = Backbone.Router.extend({
 
     select_channel:function() {
         var self = this;
-        this.slidePage(new SelectChannelPage().render());
+        var selectChannelPage = new SelectChannelPage(); 
+        this.activePage = selectChannelPage; 
+        this.slidePage(this.activePage.render());
     },   
 
-    select_program:function() {
+    select_program:function(channel_id_str) {
         var self = this;
-        this.slidePage(new SelectProgramPage().render());
+        var selectProgramPage = new SelectProgramPage(); 
+        this.activePage = selectProgramPage; 
+        this.slidePage(this.activePage.render());
     },   
 
-    show_program_activity:function() {
+    show_program_activity:function(program_id_str) {
         var self = this;
-        this.slidePage(new ShowProgramActivityPage().render());
+        var programPage = new ShowProgramActivityPage() 
+        this.activePage = programPage; 
+        this.slidePage(this.activePage.render());
     },   
 
-    show_discussions:function() {
+    show_discussions:function(program_id_str) {
         var self = this;
-
+        program_id = parseInt(program_id_str);
+        
 // We keep a single instance of the DiscussionPage and its associated Discussion collection throughout the app<-- not the case
-        this.discussionsCollection = new DiscussionsCollection();
-        this.discussionsCollection.loadData(1);
-        this.discussionsPage = new ShowDiscussionsPage({model: this.discussionsCollection});
-        this.slidePage(this.discussionsPage.render());
-    },   
+        var discussionsCollection = new DiscussionsCollection();
+        discussionsCollection.loadData(program_id);
+        var discussionsPage = new ShowDiscussionsPage({model: discussionsCollection});
 
-    show_comments:function(id) {
+        this.activePage = discussionsPage; 
+        this.slidePage(this.activePage.render());
+    },
+
+    add_discussion:function() {
         var self = this;
+        var addDiscussionPage = new AddDiscussionPage() 
+        this.activePage = addDiscussionPage; 
+        this.slidePage(this.activePage.render());
+        
+    },      
 
-        this.commentsCollection = new CommentsCollection();
-        this.commentsCollection.loadData(1);
-        this.commentsPage = new ShowCommentsPage({model: this.commentsCollection});
-        this.slidePage(this.commentsPage.render());
+    show_comments:function(discussion_id_str) {
+        var self = this;
+        discussion_id = parseInt(discussion_id_str);
+
+        var discussion = new Discussion({id: discussion_id});
+        discussion.fetch( {
+            success:function (data) {
+                var commentsCollection = new CommentsCollection();
+                commentsCollection.loadData(discussion_id);
+                var commentsPage = new ShowCommentsPage({
+                                                            model:commentsCollection, 
+                                                            discussion:data
+                                                        });
+                self.activePage = commentsPage;
+                self.slidePage(self.activePage.render());
+            }
+        });
     },   
 
-    show_program_merchandise:function() {
+    show_merchandise:function(program_id_str) {
         var self = this;
         this.slidePage(new ShowMerchandisePage().render());
     },   
 
-    show_chat:function() {
+    show_chat:function(program_id_str) {
         var self = this;
         this.slidePage(new ShowChatPage().render());
     },   
@@ -192,7 +229,8 @@ var AppRouter = Backbone.Router.extend({
 
 $(document).ready(function () {
     tpl.loadTemplates(  [ 'login','signup','select_channel','select_program','show_program_activity', 
-                          'show_discussions', 'discussion-list-item','show_comments', 'comment-list-item','show_program_merchandise', 'show_chat'
+                          'show_discussions', 'discussion-list-item','show_comments', 'comment-list-item',
+                          'show_program_merchandise', 'show_chat', 'add_discussion'
                         ],
         function () {
             app = new AppRouter();

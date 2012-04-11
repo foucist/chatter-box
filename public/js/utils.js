@@ -79,6 +79,10 @@ store = {
         return results;
     },
 
+    findDiscussionById: function(discussion_id) {
+        return this.discussions[discussion_id];
+    },
+
     findComments: function(discussion_id) {
         var results = [];
         for (var id in this.comments) {

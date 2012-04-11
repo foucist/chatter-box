@@ -127,6 +127,24 @@ window.ShowProgramActivityPage = Backbone.View.extend({
     },
 });
 
+window.AddDiscussionPage = Backbone.View.extend({
+
+    initialize:function () {
+        this.template = _.template(tpl.get('add_discussion'));
+    },
+    //this.model is a collection here
+    render:function (eventName) {    
+       $(this.el).html(this.template());
+       $("#add_discussion").click(function() {
+            
+            alert("do the trigger of add_discussion event");
+            return false;
+        });
+
+        return this;
+    },
+});
+
 window.ShowDiscussionsPage = Backbone.View.extend({
 
     initialize:function () {
@@ -134,8 +152,12 @@ window.ShowDiscussionsPage = Backbone.View.extend({
     },
     //this.model is a collection here
     render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
-        this.listView = new DiscussionListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
+        var modelJSON = this.model.toJSON();
+        
+        $(this.el).html(this.template(modelJSON));
+        this.listView = new DiscussionListView({    el: $('ul', this.el), 
+                                                    model: this.model
+                                                });  //<-- model is a collection here
         this.listView.render();
         return this;
     },
@@ -163,7 +185,8 @@ window.DiscussionListItemView = Backbone.View.extend({
     },
 
     render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
+        var modelJSON = this.model.toJSON();
+        $(this.el).html(this.template(modelJSON));
         return this;
     }
 });
@@ -177,7 +200,8 @@ window.ShowCommentsPage = Backbone.View.extend({
     render:function (eventName) { 
 
         var commentsCollectionJSON = this.model.toJSON();
-        commentsCollectionJSON.discussion_id = commentsCollectionJSON[0].discussion_id;
+        commentsCollectionJSON.discussion = this.options.discussion.toJSON();
+
         $(this.el).html(this.template(commentsCollectionJSON));
         this.listView = new CommentListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
         this.listView.render();

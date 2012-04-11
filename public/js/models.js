@@ -18,6 +18,22 @@ window.Question = Backbone.Model.extend({
 });
 
 window.Discussion = Backbone.Model.extend({
+    sync: function (method, model, options) {
+        switch (method) {
+            case "read":
+                if (model.id) {
+                    // Request to read a single item identified by its id.
+                    options.success(store.findDiscussionById(model.id));
+                }
+                break;
+            case "update":
+                break;
+            case "create":
+                alert("create something");
+                break;
+        }
+    },
+
     defaults: function() {
         return {
             program_id: -1,
