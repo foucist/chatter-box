@@ -5,3 +5,4 @@ tmp/**/*
 1/*
 .*.swp
 *.bak
+public/uploads

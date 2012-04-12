@@ -13,6 +13,9 @@ gem 'omniauth-facebook'
 #gem 'omniauth-twitter'
 #gem 'omniauth-google'
 
+gem 'carrierwave'
+gem 'mini_magick'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

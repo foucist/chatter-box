@@ -1,7 +1,15 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => true }) do |f| %>
   <%= devise_error_messages! %>
+
+  <%= image_tag current_user.image.url if current_user.image.url.present? %>
+  <%= image_tag current_user.image.url(:thumb_fit) if current_user.image.url.present? %>
+  <%= image_tag current_user.image.url(:thumb_fill) if current_user.image.url.present? %>
+
+  <div><%= f.label :image %><br />
+  <%= f.file_field :image %><%= f.hidden_field :image_cache %><br />
+  <%= f.check_box :remove_image %><%= f.label :remove_image %></div>
 
   <div><%= f.label :username %><br />
   <%= f.text_field :username %></div>
