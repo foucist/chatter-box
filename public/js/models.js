@@ -86,7 +86,6 @@ window.CommentsCollection = Backbone.Collection.extend({
                 $.ajax({
                     STUFF
                 }); 
-                */  
                 */
                 break;
             case "update":
