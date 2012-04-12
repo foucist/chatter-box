@@ -92,7 +92,7 @@ window.CommentsCollection = Backbone.Collection.extend({
                 alert("collection update");
                 break;
             case "create":
-                alert("collection create");/* ..do something like the following              
+                alert("collection create");           
                 break;
         }
     },
