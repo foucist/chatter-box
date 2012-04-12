@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  mount_uploader :image, ImageUploader
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,7 +9,12 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :authentication_token
+  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me,
+                  :authentication_token, :image, :image_cache, :remove_image
+
+  validates_integrity_of  :image
+  validates_processing_of :image
+
 
   # for username OR email login
   def self.find_for_database_authentication(warden_conditions)
