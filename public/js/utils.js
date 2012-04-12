@@ -96,6 +96,16 @@ store = {
     saveAnswer: function(modified_model) {
         this.questions[modified_model.id].answerText = modified_model.get('answerText');
         this.questions[modified_model.id].isAnswered = modified_model.get('isAnswered');
+    }, 
+
+    createDiscussion: function(program_id, discussion, user_id) {
+        var numDiscussions = Object.keys(this.discussions).length;
+        this.discussions[numDiscussions+1] = {  id: numDiscussions+1, 
+                                                program_id: program_id,
+                                                user_id: user_id, 
+                                                discussion: discussion,
+                                                updated_at: Date.now()
+                                            }
     }
 }
 

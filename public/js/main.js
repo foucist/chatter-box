@@ -76,8 +76,16 @@ var AppRouter = Backbone.Router.extend({
             });
         }
 
-        $('#content').on("createDiscussion", function() {
-            alert("about to create discussion object");
+        $('#content').on("click", "#add_discussion", function(event) {
+            var programId = $('#programId').val(); 
+            var newDiscussion = $('#discussionTopic').val();
+            var discussion = new Discussion({
+                program_id: parseInt(programId),
+                discussion: newDiscussion,
+                user_id: 1
+            });
+            discussion.save();
+            window.location = "#program/"+programId+"/show_discussions";
         }); 
     },
 
