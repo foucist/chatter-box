@@ -27,9 +27,19 @@ window.Discussion = Backbone.Model.extend({
                 }
                 break;
             case "update":
+                alert("update something");
                 break;
             case "create":
-                alert("create something");
+                store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id')); 
+                /* ..do something like the following
+                $.ajax({
+                    url: "localhost/discussions",
+                    method: "post",
+                    program_id: model.get('program_id');
+                    discussion: model.get('discussion');
+                    user_id: model.get('user_id');
+                }); 
+                */                
                 break;
         }
     },

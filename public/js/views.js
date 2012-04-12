@@ -130,16 +130,11 @@ window.ShowProgramActivityPage = Backbone.View.extend({
 window.AddDiscussionPage = Backbone.View.extend({
 
     initialize:function () {
-        this.template = _.template(tpl.get('add_discussion'));
+        this.template = _.template(tpl.get('add_discussion')); 
     },
     //this.model is a collection here
     render:function (eventName) {    
        $(this.el).html(this.template());
-       $("#add_discussion").click(function() {
-            
-            alert("do the trigger of add_discussion event");
-            return false;
-        });
 
         return this;
     },
