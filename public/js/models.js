@@ -1,21 +1,4 @@
 //Model
-window.Question = Backbone.Model.extend({
-    defaults: function() {
-        return {
-            /*** my stuff ***/
-            qid: -1,
-            skoutUserId: -1,
-            name: "",
-            imgSrc: "",
-            isMyQuestion: true,
-            questionText: "New question available soon!",
-            answerText: "",
-            isAnswered: false,
-            lastUpdated: null,
-            nextQuestion: null
-        };
-    },
-});
 
 window.Discussion = Backbone.Model.extend({
     sync: function (method, model, options) {
@@ -30,16 +13,7 @@ window.Discussion = Backbone.Model.extend({
                 alert("update something");
                 break;
             case "create":
-                store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id')); 
-                /* ..do something like the following
-                $.ajax({
-                    url: "localhost/discussions",
-                    method: "post",
-                    program_id: model.get('program_id');
-                    discussion: model.get('discussion');
-                    user_id: model.get('user_id');
-                }); 
-                */                
+                store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id'));              
                 break;
         }
     },
@@ -57,6 +31,24 @@ window.Discussion = Backbone.Model.extend({
 });
 
 window.Comment = Backbone.Model.extend({
+    sync: function (method, model, options) {
+        switch (method) {
+            case "read":
+                break;
+            case "update":
+                break;
+            case "create":
+                var newComment = store.createNewComment(model.get('discussion_id'), model.get('comment'), model.get('user_id')); 
+                options.success(newComment);              
+                /* TODO: 
+                    $.ajax({
+                        STUFF
+                    }); 
+                */  
+                break;
+        }
+    },
+
     defaults: function() {
         return {
             discussion_id: -1,
@@ -84,10 +76,27 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 
 window.CommentsCollection = Backbone.Collection.extend({
     model: Comment,
+    discussion_id: -1,
 
-    loadData: function(discussion_id) {
-        this.reset(store.findComments(discussion_id)); //TODO: Fix this..find a better way
-    }, 
+    sync: function (method, model) {
+        switch (method) {
+            case "read":
+                this.reset(store.findComments(model.discussion_id));
+                /* TODO
+                $.ajax({
+                    STUFF
+                }); 
+                */  
+                */
+                break;
+            case "update":
+                alert("collection update");
+                break;
+            case "create":
+                alert("collection create");/* ..do something like the following              
+                break;
+        }
+    },
 
     findByName:function (key) {
         this.reset(store.findByName(key));

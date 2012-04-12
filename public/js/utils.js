@@ -37,11 +37,11 @@ store = {
         this.discussions[4] = {id: 4, program_id: 2, user_id: 3, discussion: 'Can we use ChatterBox to win the prize?', updated_at: Date.now()};
         this.discussions[5] = {id: 5, program_id: 2, user_id: 4, discussion: 'Is this gameshow too easy?', updated_at: Date.now()};
 
-        this.comments[1] = {id: 1, discussion_id: 1, reply_to_comment_id: 0, user_id: 1, comment: 'Hell yeah! hot and sexy!', updated_at: (new Date()).getDate()-4};
-        this.comments[2] = {id: 2, discussion_id: 1, reply_to_comment_id: 1, user_id: 2, comment: 'Are you kidding? it\'s surgery man..', updated_at: Date.now()};
-        this.comments[3] = {id: 3, discussion_id: 1, reply_to_comment_id: 2, user_id: 3, comment: 'look like ladyboy..but skinnier', updated_at: Date.now()};
-        this.comments[4] = {id: 4, discussion_id: 1, reply_to_comment_id: 0, user_id: 4, comment: 'I like skirt more', updated_at: Date.now()};
-        this.comments[5] = {id: 5, discussion_id: 1, reply_to_comment_id: 4, user_id: 1, comment: 'totally agree!', updated_at: Date.now()};
+        this.comments[1] = {id: 1, discussion_id: 1, user_id: 1, comment: 'Hell yeah! hot and sexy!', updated_at: (new Date()).getDate()-4};
+        this.comments[2] = {id: 2, discussion_id: 1, user_id: 2, comment: 'Are you kidding? it\'s surgery man..', updated_at: Date.now()};
+        this.comments[3] = {id: 3, discussion_id: 1, user_id: 3, comment: 'look like ladyboy..but skinnier', updated_at: Date.now()};
+        this.comments[4] = {id: 4, discussion_id: 1, user_id: 4, comment: 'I like skirt more', updated_at: Date.now()};
+        this.comments[5] = {id: 5, discussion_id: 1, user_id: 1, comment: 'totally agree!', updated_at: Date.now()};
     },
 
     //id and qid in this application will be the same value
@@ -106,6 +106,17 @@ store = {
                                                 discussion: discussion,
                                                 updated_at: Date.now()
                                             }
+    },
+
+    createNewComment: function(discussion_id, comment, user_id) {
+        var numComments = Object.keys(this.comments).length;
+        this.comments[numComments+1] = {  id: numComments+1, 
+                                                discussion_id: discussion_id,
+                                                user_id: user_id, 
+                                                comment: comment,
+                                                updated_at: Date.now()
+                                            };
+        return this.comments[numComments+1];
     }
 }
 

@@ -190,7 +190,9 @@ window.ShowCommentsPage = Backbone.View.extend({
 
     initialize:function () {
         this.template = _.template(tpl.get('show_comments'));
+        this.model.bind('add', this.render, this);
     },
+
     //this.model is a collection here
     render:function (eventName) { 
 

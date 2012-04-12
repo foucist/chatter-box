@@ -87,6 +87,25 @@ var AppRouter = Backbone.Router.extend({
             discussion.save();
             window.location = "#program/"+programId+"/show_discussions";
         }); 
+
+        $('#content').on("click", "#add_comment", function(event) {
+            var discussionId = $('#discussionId').val(); 
+            var newComment = $('#commentText').val();
+            var comment = new Comment();
+            comment.save({
+                            discussion_id: parseInt(discussionId),
+                            comment: newComment,
+                            user_id: 1
+                        },
+                        {
+                            success: function(data) {
+                               //add the new comment to CommentCollection
+                               self.activePage.model.add(data);
+                            }
+                        });
+            //self.activePage.render(); //TODO <-- fix this
+        }); 
+        
     },
 
     selectItem:function(event) {
@@ -164,7 +183,8 @@ var AppRouter = Backbone.Router.extend({
         discussion.fetch( {
             success:function (data) {
                 var commentsCollection = new CommentsCollection();
-                commentsCollection.loadData(discussion_id);
+                commentsCollection.discussion_id = discussion_id;
+                commentsCollection.fetch();
                 var commentsPage = new ShowCommentsPage({
                                                             model:commentsCollection, 
                                                             discussion:data
