@@ -14,6 +14,8 @@ window.Discussion = Backbone.Model.extend({
                 break;
             case "create":
                 store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id'));              
+                var data = {"discussion":{program_id: model.get('program_id'), title: model.get('discussion'), user_id: model.get('user_id')}};
+                $.post('discussions.json', data);
                 break;
         }
     },
@@ -40,11 +42,8 @@ window.Comment = Backbone.Model.extend({
             case "create":
                 var newComment = store.createNewComment(model.get('discussion_id'), model.get('comment'), model.get('user_id')); 
                 options.success(newComment);              
-                /* TODO: 
-                    $.ajax({
-                        STUFF
-                    }); 
-                */  
+                var data = {"comment":{body: model.get('comment'), user_id: model.get('user_id')}};
+                $.post('/discussions/'+model.get('discussion_id') +'/comments.json', data);
                 break;
         }
     },
