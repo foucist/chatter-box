@@ -146,19 +146,18 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 });
 
 window.CommentsCollection = Backbone.Collection.extend({
-  url: '/discussions/1/comments.json',
     model: Comment,
     discussion_id: -1,
+    url: '/discussions/1/comments.json',
 
+    loadData: function(discussion_id) {
+      this.fetch({comments: {discussion_id: discussion_id}});
+    },
+   /*
     sync: function (method, model) {
         switch (method) {
             case "read":
                 this.reset(store.findComments(model.discussion_id));
-                /* TODO
-                $.ajax({
-                    STUFF
-                }); 
-                */
                 break;
             case "update":
                 alert("collection update");
@@ -168,6 +167,7 @@ window.CommentsCollection = Backbone.Collection.extend({
                 break;
         }
     },
+      */
 
     findByName:function (key) {
         this.reset(store.findByName(key));

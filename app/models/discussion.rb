@@ -3,7 +3,6 @@ class Discussion < ActiveRecord::Base
   #alias_attribute :title, :discussion
   has_many :comments
 
-  # total hack for the old messageboard backbone
   def discussion=(discussion)
     self.title = discussion
   end
