@@ -109,10 +109,46 @@ window.SelectProgramPage = Backbone.View.extend({
         this.template = _.template(tpl.get('select_program'));
     },
     //this.model is a collection here
+
+
     render:function (eventName) {
-        $(this.el).html(this.template());
+       var modelJSON = this.model.toJSON();
+        
+        $(this.el).html(this.template(modelJSON));
+        this.listView = new ProgramListView({    el: $('ul', this.el), 
+                                                    model: this.model
+                                                });  //<-- model is a collection here
+        this.listView.render();
         return this;
     },
+});
+
+window.ProgramListView = Backbone.View.extend({
+
+    initialize:function () {
+        this.model.bind("reset", this.render, this);
+    },
+
+    render:function (eventName) {
+        $(this.el).empty();
+        _.each(this.model.models, function (program) {
+            $(this.el).append(new ProgramListItemView({model:program}).render().el);
+        }, this);
+        return this;
+    }
+});
+
+window.ProgramListItemView = Backbone.View.extend({
+    tagName:"li",
+    initialize:function () {
+        this.template = _.template(tpl.get('program-list-item'));
+    },
+
+    render:function (eventName) {
+        var modelJSON = this.model.toJSON();
+        $(this.el).html(this.template(modelJSON));
+        return this;
+    }
 });
 
 window.ShowProgramActivityPage = Backbone.View.extend({
@@ -122,7 +158,7 @@ window.ShowProgramActivityPage = Backbone.View.extend({
     },
     //this.model is a collection here
     render:function (eventName) {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.model.toJSON()));
         return this;
     },
 });
@@ -135,7 +171,6 @@ window.AddDiscussionPage = Backbone.View.extend({
     //this.model is a collection here
     render:function (eventName) {    
        $(this.el).html(this.template());
-
         return this;
     },
 });

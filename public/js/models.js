@@ -1,4 +1,32 @@
 //Model
+window.Program = Backbone.Model.extend({
+    sync: function (method, model, options) {
+        switch (method) {
+            case "read":
+                options.success(model);
+                break;
+            case "update":
+                alert("update something");
+                break;
+            case "create":
+                store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id'));              
+                break;
+        }
+    },
+
+    defaults: function() {
+        return {
+            channel_id: -1,
+            program: "",
+            tagline: "",
+            img: "",
+            start_time: null,
+            end_time: null,
+            updated_at: null,
+            created_at: null
+        };
+    },
+});
 
 window.Discussion = Backbone.Model.extend({
     sync: function (method, model, options) {
@@ -62,12 +90,43 @@ window.Comment = Backbone.Model.extend({
 });
 
 //Collection
+window.ProgramsCollection = Backbone.Collection.extend({
+    model: Program,
+    channel_id: -1,
+
+    sync: function (method, model) {
+        switch (method) {
+            case "read":
+                this.reset(store.findPrograms(model.channel_id)); 
+                break;
+            case "update":
+                alert("program collection update");
+                break;
+            case "create":
+                alert("program collection create");           
+                break;
+        }
+    },
+});
+
+
 window.DiscussionsCollection = Backbone.Collection.extend({
     model: Discussion,
+    program_id: -1,
 
-    loadData: function(program_id) {
-        this.reset(store.findDiscussions(program_id)); //TODO: Fix this..find a better way
-    }, 
+    sync: function (method, model) {
+        switch (method) {
+            case "read":
+                this.reset(store.findDiscussions(model.program_id)); 
+                break;
+            case "update":
+                alert("collection update");
+                break;
+            case "create":
+                alert("collection create");           
+                break;
+        }
+    },
 
     findByName:function (key) {
         this.reset(store.findByName(key));

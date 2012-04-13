@@ -28,9 +28,17 @@ tpl = {
 // In-memory Store
 store = {
 
+    programs: {},
     discussions: {},
     comments: {},
+
     populate: function() {
+        this.programs[1] = {id: 1, channel_id: 1,program: "Dok Som See Thong", tagline: "second scene", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
+        this.programs[2] = {id: 2, channel_id: 1,program: "Who want to be the millionaire?", tagline: "Jackpot round", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
+        this.programs[3] = {id: 3, channel_id: 1,program: "Prime Minister News", tagline: "Is Thailand prepare for next year?", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
+        this.programs[4] = {id: 4, channel_id: 1,program: "Master Key Game Show", tagline: "2kg of gold at stake", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
+        this.programs[5] = {id: 5, channel_id: 2,program: "CSI: Bangkok", tagline: "Who is the killer?", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
+
         this.discussions[1] = {id: 1, program_id: 1, user_id: 1, discussion: 'Do you think Aum looks hot in jeans?', updated_at: Date.now()};
         this.discussions[2] = {id: 2, program_id: 1, user_id: 1, discussion: 'How should the ending story be?', updated_at: Date.now()};
         this.discussions[3] = {id: 3, program_id: 1, user_id: 2, discussion: 'Why did Reya hit her mother?', updated_at: Date.now()};
@@ -41,7 +49,7 @@ store = {
         this.comments[2] = {id: 2, discussion_id: 1, user_id: 2, comment: 'Are you kidding? it\'s surgery man..', updated_at: Date.now()};
         this.comments[3] = {id: 3, discussion_id: 1, user_id: 3, comment: 'look like ladyboy..but skinnier', updated_at: Date.now()};
         this.comments[4] = {id: 4, discussion_id: 1, user_id: 4, comment: 'I like skirt more', updated_at: Date.now()};
-        this.comments[5] = {id: 5, discussion_id: 1, user_id: 1, comment: 'totally agree!', updated_at: Date.now()};
+        this.comments[5] = {id: 5, discussion_id: 1, user_id: 1, comment: 'totally agree!', updated_at: Date.now()};    
     },
 
     //id and qid in this application will be the same value
@@ -67,6 +75,20 @@ store = {
             }
         }
         return results;
+    },
+
+    findPrograms: function(channel_id) {
+        var results = [];
+        for (var id in this.programs) {
+            if ( this.programs[id].channel_id === parseInt(channel_id)) {
+                results.push(this.programs[id]);
+            }
+        }
+        return results;
+    },
+
+    findProgramById: function(program_id) {
+        return this.programs[program_id];
     },
 
     findDiscussions: function(program_id) {

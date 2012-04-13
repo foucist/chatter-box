@@ -38,9 +38,9 @@ var AppRouter = Backbone.Router.extend({
         "program/:program_id/show_merchandise"  :   "show_merchandise", 
         "program/:program_id/show_chat"         :   "show_chat",
 
-        "discussion/add"                   :   "add_discussion", 
-        "discussion/:discussion_id"        :   "show_comments", 
-        "discussion/:discussion_id/add"    :   "add_comment"
+        "discussions/:program_id/add"       :   "add_discussion", 
+        "discussion/:discussion_id"         :   "show_comments", 
+        "discussion/:discussion_id/add"     :   "add_comment"
     },
 
     initialize: function() {
@@ -142,16 +142,27 @@ var AppRouter = Backbone.Router.extend({
 
     select_program:function(channel_id_str) {
         var self = this;
-        var selectProgramPage = new SelectProgramPage(); 
+        var channel_id = parseInt(channel_id_str);
+        var programsCollection = new ProgramsCollection();
+        programsCollection.channel_id = channel_id;
+        programsCollection.fetch();
+        var selectProgramPage = new SelectProgramPage({model: programsCollection});
         this.activePage = selectProgramPage; 
         this.slidePage(this.activePage.render());
     },   
 
     show_program_activity:function(program_id_str) {
         var self = this;
-        var programPage = new ShowProgramActivityPage() 
-        this.activePage = programPage; 
-        this.slidePage(this.activePage.render());
+        var program_id = parseInt(program_id_str);
+
+        var program = new Program({id: program_id});
+        program.fetch( {
+            success:function (data) {
+                var showProgramActivityPage = new ShowProgramActivityPage({model:data});
+                self.activePage = showProgramActivityPage;
+                self.slidePage(self.activePage.render());
+            }
+        });
     },   
 
     show_discussions:function(program_id_str) {
@@ -160,7 +171,8 @@ var AppRouter = Backbone.Router.extend({
         
 // We keep a single instance of the DiscussionPage and its associated Discussion collection throughout the app<-- not the case
         var discussionsCollection = new DiscussionsCollection();
-        discussionsCollection.loadData(program_id);
+        discussionsCollection.program_id = program_id;
+        discussionsCollection.fetch();
         var discussionsPage = new ShowDiscussionsPage({model: discussionsCollection});
 
         this.activePage = discussionsPage; 
@@ -258,7 +270,7 @@ var AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     tpl.loadTemplates(  [ 'login','signup','select_channel','select_program','show_program_activity', 
                           'show_discussions', 'discussion-list-item','show_comments', 'comment-list-item',
-                          'show_program_merchandise', 'show_chat', 'add_discussion'
+                          'show_program_merchandise', 'show_chat', 'add_discussion', 'program-list-item'
                         ],
         function () {
             app = new AppRouter();
