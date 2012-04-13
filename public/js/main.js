@@ -1,29 +1,3 @@
-// Overriding Backbone's sync method. We replace the default RESTful services-based implementation
-// with a simple in-memory approach so that this sample doesn't have a dependency on remote services.
-Backbone.sync = function (method, model, options) {
-    alert("hey girl!");
-    switch (method) {
-        case "read":
-            if (model.id) {
-                // Request to read a single item identified by its id.
-                options.success(store.findByQid(model.id));
-            } /*else if (model.managerId) {
-                // Request to read a collection of employees identified by the manager they work for.
-                options.success(store.findByManager(model.managerId));
-            } */else {
-                // Request to read a collection of all questions.
-                options.success(store.findAll());
-            }
-            break;
-        case "update":
-            store.saveAnswer(model);
-            break;
-        case "create":
-            alert("create something");
-            break;
-    }
-};
-
 var AppRouter = Backbone.Router.extend({
 
     routes:{
