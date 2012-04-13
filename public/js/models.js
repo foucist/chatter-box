@@ -117,18 +117,19 @@ window.DiscussionsCollection = Backbone.Collection.extend({
   url: '/discussions.json',
     model: Discussion,
     program_id: -1,
-
-    loadData: function(program_id) {
-      this.fetch({discussion: {program_id: program_id}});
-        // this.reset(store.findDiscussions(program_id)); //TODO: Fix this..find a better way
-    },
-
-     /* doesn't work?
+  
     sync: function (method, model) {
+      var self = this;
         switch (method) {
             case "read":
-                this.fetch({discussion: {program_id: program_id}});
-             //   this.reset(store.findDiscussions(model.program_id)); 
+              $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: "/discussions.json",
+                success: function(data) { 
+                  self.reset(data);
+                }
+              });
                 break;
             case "update":
                 alert("collection update");
@@ -138,7 +139,6 @@ window.DiscussionsCollection = Backbone.Collection.extend({
                 break;
         }
     },
-    */
 
     findByName:function (key) {
         this.reset(store.findByName(key));
@@ -148,17 +148,21 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 window.CommentsCollection = Backbone.Collection.extend({
     model: Comment,
     discussion_id: -1,
-    url: '/discussions/1/comments.json',
+    url: '/discussions/'+model.discussion_id+'/comments.json',
 
-    loadData: function(discussion_id) {
-      this.fetch({comments: {discussion_id: discussion_id}});
-    },
-   /*
     sync: function (method, model) {
+      var self = this;
         switch (method) {
-            case "read":
-                this.reset(store.findComments(model.discussion_id));
-                break;
+          case "read":
+            $.ajax({
+              type: 'get',
+              dataType: 'json',
+              url: '/discussions/'+model.discussion_id+'/comments.json',
+              success: function(data) { 
+                self.reset(data);
+              }
+            });
+            break;
             case "update":
                 alert("collection update");
                 break;
@@ -167,7 +171,6 @@ window.CommentsCollection = Backbone.Collection.extend({
                 break;
         }
     },
-      */
 
     findByName:function (key) {
         this.reset(store.findByName(key));
