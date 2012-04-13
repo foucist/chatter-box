@@ -2,7 +2,8 @@
 db/*.sqlite3
 log/*.log
 tmp/**/*
-1/*
+ignore/
 .*.swp
 *.bak
 public/uploads
+
