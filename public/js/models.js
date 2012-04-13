@@ -1,5 +1,6 @@
 //Model
 window.Program = Backbone.Model.extend({
+    urlRoot: '/programs',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -29,6 +30,7 @@ window.Program = Backbone.Model.extend({
 });
 
 window.Discussion = Backbone.Model.extend({
+    urlRoot: '/discussions',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -61,6 +63,7 @@ window.Discussion = Backbone.Model.extend({
 });
 
 window.Comment = Backbone.Model.extend({
+  urlRoot: '/discussions/1/comments',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -90,6 +93,7 @@ window.Comment = Backbone.Model.extend({
 
 //Collection
 window.ProgramsCollection = Backbone.Collection.extend({
+  url: '/programs.json',
     model: Program,
     channel_id: -1,
 
@@ -110,13 +114,21 @@ window.ProgramsCollection = Backbone.Collection.extend({
 
 
 window.DiscussionsCollection = Backbone.Collection.extend({
+  url: '/discussions.json',
     model: Discussion,
     program_id: -1,
 
+    loadData: function(program_id) {
+      this.fetch({discussion: {program_id: program_id}});
+        // this.reset(store.findDiscussions(program_id)); //TODO: Fix this..find a better way
+    },
+
+     /* doesn't work?
     sync: function (method, model) {
         switch (method) {
             case "read":
-                this.reset(store.findDiscussions(model.program_id)); 
+                this.fetch({discussion: {program_id: program_id}});
+             //   this.reset(store.findDiscussions(model.program_id)); 
                 break;
             case "update":
                 alert("collection update");
@@ -126,6 +138,7 @@ window.DiscussionsCollection = Backbone.Collection.extend({
                 break;
         }
     },
+    */
 
     findByName:function (key) {
         this.reset(store.findByName(key));
@@ -133,6 +146,7 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 });
 
 window.CommentsCollection = Backbone.Collection.extend({
+  url: '/discussions/1/comments.json',
     model: Comment,
     discussion_id: -1,
 
