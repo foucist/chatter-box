@@ -25,6 +25,8 @@ var AppRouter = Backbone.Router.extend({
         // (left or right) of the sliding transition between pages.
         this.pageHistory = [];
         this.activePage = null;
+        this.loggedInUser = null;
+
         // Register event listener for back button throughout the app
         $('#content').on('click', '.header-back-button', function(event){
             window.history.back();
@@ -78,6 +80,59 @@ var AppRouter = Backbone.Router.extend({
                             }
                         });
             //self.activePage.render(); //TODO <-- fix this
+        });
+
+        //signing up
+        $('#content').on("click", ".signupBtn", function(event) {
+            event.preventDefault();
+            var username = $('#username').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var confirmPassword = $('#confirmPassword').val(); 
+
+            if(password !== confirmPassword) {
+                alert("Password and confirm password is different.");
+                return; 
+            }
+
+            //alert("signing up, username: "+username+",email: "+email+",password: "+password+",cf password: "+confirmPassword);
+            var newUser = new User();
+            newUser.save({
+                            username: username,
+                            email: email,
+                            password: password
+                        },
+                        {
+                            success: function(data) {
+                               //add the new comment to CommentCollection
+                               //self.activePage.model.add(data);
+                                alert("successfully added it");
+                                self.loggedInUser = data;
+                                window.location = "#select_channel";
+                            },
+                            error: function(data, error) {
+                                alert(error);
+                                self.loggedInUser = null;
+                            }
+                    });
+        });
+
+        //logging in
+        $('#content').on("click", ".loginBtn", function(event) {
+            event.preventDefault();
+            var usernameOrEmail = $('#loginEmail').val();
+            var password = $('#loginPassword').val();
+
+            //alert("signing up, username: "+username+",email: "+email+",password: "+password+",cf password: "+confirmPassword);
+            var loggingInCandidate = new User({username:usernameOrEmail, password:password});
+            var loginStatus = loggingInCandidate.login();
+            if(loginStatus) {
+                alert("successfully logged in");
+                self.loggedInUser = loggingInCandidate;
+                window.location = "#select_channel";
+            } else {
+                alert("dude...you can't remember your password?");
+            }
         }); 
         
     },

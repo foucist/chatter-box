@@ -1,6 +1,57 @@
 //Model
 USING_RAILS_SERVER = false;
 
+window.User = Backbone.Model.extend({
+    validate: function(attrs) {
+        if(attrs.username==="") {
+            return("Username can't be empty"); 
+        }
+        if(attrs.email==="") { 
+            return("Email can't be empty"); 
+        }
+        if(attrs.password==="") { 
+            return("Password can't be empty"); 
+        }
+    },
+
+    login: function() {
+        var isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
+        return isLoggedIn;
+    }, 
+
+    sync: function (method, model, options) {
+        switch (method) {
+            case "read":
+                alert("reading data from the server")
+                break;
+            case "update":
+                alert("update something");
+                break;
+            case "create":
+                alert("create a user to the server, check if password match, actual email, none blank");
+                
+                //get the data and verify whether it is successfully loggin or not
+                var result = store.createAccount(model);
+                if(result === "success")
+                   options.success(model);
+                else 
+                    options.error(model,"ERROR MESSAGE HERE: "+result);
+                break;
+        }
+    },
+
+    defaults: function() {
+        return {
+            username: "",
+            email: "",
+            password: "",
+            img: "",
+            fb_auth_token: "",
+            tw_auth_token: ""
+        };
+    },
+});
+
 window.Program = Backbone.Model.extend({
     urlRoot: '/programs',
     sync: function (method, model, options) {
