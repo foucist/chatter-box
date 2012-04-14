@@ -13,6 +13,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 #gem 'omniauth-google'
 
+gem 'twitter'
+
 gem 'carrierwave'
 gem 'mini_magick'
 

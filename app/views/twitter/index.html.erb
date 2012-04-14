@@ -1,0 +1,13 @@
+<p><%= render 'form' %></p>
+
+<div id="tweets">
+  <% @tweets.each do |tweet| %>
+    <div>
+      <%= image_tag "#{tweet.profile_image_url}" %>
+      <span style="font-weight:bold;"><%= tweet.from_user %></span>
+      <br />
+      <%= tweet.text %>
+      <span style="font-weight:bold;"><%= link_to "retweet this", "twitter/retweet/#{tweet.id.to_s}" %></span>
+    </div>
+  <% end %>
+</div>

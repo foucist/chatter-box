@@ -1,0 +1,41 @@
+<% content_for :title do %>
+  <style type="text/css">
+    .programlist{
+      margin:0;
+      padding:0;
+    }
+    .programlist li{
+      display:block;
+      margin-top:-4px;
+    }
+    .programlist li img{
+      width:100%;
+    }
+    .programlist .caption{
+      position: absolute;
+      top: -24px;
+      color: white;
+      text-shadow: none;
+      float: left;
+    }
+  </style>
+<% end %>
+
+<% content_for :title do %>
+  <h1>Twitter Sign-in</h1>
+<% end %>
+
+<% content_for :style do %>
+  style="padding:0; background:url(images/login-bg.png);"
+<% end %>
+
+<div style="padding:50px;">
+  <form action="/auth/twitter" method="post"> 
+    <label for="basic">Username:</label>
+    <input type="text" name="name" id="basic" value=""  />
+    <label for="basic">Password:</label>
+    <input type="password" name="password" id="password" value=""  />
+    <input type="submit" name="login" id="login" value="Signin" />
+  </form>
+
+</div>
