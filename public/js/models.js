@@ -15,7 +15,14 @@ window.User = Backbone.Model.extend({
     },
 
     login: function() {
-        var isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
+        
+        var isLoggedIn = false;
+        if(USING_RAILS_SERVER) { 
+            //return isLoggedIn boolean 
+            alert("TODO: link with Rails: create a new user"); 
+        } else {
+            isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
+        }
         return isLoggedIn;
     }, 
 
@@ -28,10 +35,15 @@ window.User = Backbone.Model.extend({
                 alert("update something");
                 break;
             case "create":
-                alert("create a user to the server, check if password match, actual email, none blank");
-                
                 //get the data and verify whether it is successfully loggin or not
-                var result = store.createAccount(model);
+                var result = "FAILED"
+                if(USING_RAILS_SERVER) { 
+                    //return 'success' or an error message and set it to result
+                    alert("TODO: link with Rails: create a new user"); 
+                } else {
+                    result = store.createAccount(model);
+                }
+
                 if(result === "success")
                    options.success(model);
                 else 
@@ -89,7 +101,11 @@ window.Discussion = Backbone.Model.extend({
             case "read":
                 if (model.id) {
                     // Request to read a single item identified by its id.
-                    options.success(store.findDiscussionById(model.id));
+                    if(USING_RAILS_SERVER) { 
+                        alert("TODO: link with Rails"); 
+                    } else {
+                        options.success(store.findDiscussionById(model.id));
+                    }
                 }
                 break;
             case "update":
