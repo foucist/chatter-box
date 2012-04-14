@@ -10,7 +10,7 @@ gem 'sqlite3'
 gem 'devise'
 
 gem 'omniauth-facebook'
-#gem 'omniauth-twitter'
+gem 'omniauth-twitter'
 #gem 'omniauth-google'
 
 gem 'carrierwave'
