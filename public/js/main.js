@@ -171,8 +171,7 @@ var AppRouter = Backbone.Router.extend({
         var discussion = new Discussion({id: discussion_id});
         discussion.fetch( {
             success:function (data) {
-                var commentsCollection = new CommentsCollection();
-                commentsCollection.discussion_id = discussion_id;
+                var commentsCollection = new CommentsCollection(discussion_id);
                 commentsCollection.fetch();
                 var commentsPage = new ShowCommentsPage({
                                                             model:commentsCollection, 
