@@ -1,71 +1,3 @@
-window.SearchPage = Backbone.View.extend({
-
-    initialize:function () {
-        this.template = _.template(tpl.get('search-page'));
-    },
-
-    render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
-        this.listView = new EmployeeListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
-        this.listView.render();
-        return this;
-    },
-
-    events:{
-        "keyup .search-key":"search"
-    },
-
-    search:function (event) {
-        var key = $('.search-key').val();
-        this.model.findByName(key);
-    }
-});
-
-window.DirectReportPage = Backbone.View.extend({
-
-    initialize:function () {
-        this.template = _.template(tpl.get('report-page'));
-    },
-
-    render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
-        this.listView = new EmployeeListView({el: $('ul', this.el), model: this.model});
-        this.listView.render();
-        return this;
-    }
-
-});
-
-window.EmployeePage = Backbone.View.extend({
-
-    initialize:function () {
-        this.template = _.template(tpl.get('employee-page'));
-    },
-
-    render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
-        return this;
-    }
-
-});
-
-window.EmployeeListView = Backbone.View.extend({
-
-    initialize:function () {
-        this.model.bind("reset", this.render, this);
-    },
-
-    render:function (eventName) {
-        $(this.el).empty();
-        _.each(this.model.models, function (employee) {
-            //console.log('rendering ' + employee);
-            $(this.el).append(new EmployeeListItemView({model:employee}).render().el);
-        }, this);
-        return this;
-    }
-
-});
-
 //START MY STUFF HERE...
 window.LoginPage = Backbone.View.extend({
 
@@ -180,12 +112,22 @@ window.ShowDiscussionsPage = Backbone.View.extend({
     initialize:function () {
         this.template = _.template(tpl.get('show_discussions'));
     },
+
+    events:{
+        "keyup .search-key":"search"
+    },
+
+    search:function (event) {
+        var key = $('.search-key').val();
+        this.model.findByDiscussion(key);
+    },
+
     //this.model is a collection here
     render:function (eventName) {
         var modelJSON = this.model.toJSON();
         
         $(this.el).html(this.template(modelJSON));
-        this.listView = new DiscussionListView({    el: $('ul', this.el), 
+        this.listView = new DiscussionListView({    el: $('#myList', this.el), 
                                                     model: this.model
                                                 });  //<-- model is a collection here
         this.listView.render();
@@ -210,6 +152,7 @@ window.DiscussionListView = Backbone.View.extend({
 
 window.DiscussionListItemView = Backbone.View.extend({
     tagName:"li",
+    className: "clearfix",
     initialize:function () {
         this.template = _.template(tpl.get('discussion-list-item'));
     },
@@ -226,6 +169,7 @@ window.ShowCommentsPage = Backbone.View.extend({
     initialize:function () {
         this.template = _.template(tpl.get('show_comments'));
         this.model.bind('add', this.render, this);
+
     },
 
     //this.model is a collection here
@@ -235,14 +179,24 @@ window.ShowCommentsPage = Backbone.View.extend({
         commentsCollectionJSON.discussion = this.options.discussion.toJSON();
 
         $(this.el).html(this.template(commentsCollectionJSON));
-        this.listView = new CommentListView({el: $('ul', this.el), model: this.model});  //<-- model is a collection here
+        
+        this.listView = new CommentListView({el: $('#comments', this.el), model: this.model});  //<-- model is a collection here
         this.listView.render();
+
+        //for reply section to appeaer
+        var $links = $('.thread li', this.el);
+        $links.click(function(){
+            $links.removeClass('selected');
+            $(this).addClass('selected');
+        });
+
         return this;
     },
 });
 
 window.CommentListView = Backbone.View.extend({
-
+    tagName: 'li',
+    className: 'clearfix',
     initialize:function () {
         this.model.bind("reset", this.render, this);
     },

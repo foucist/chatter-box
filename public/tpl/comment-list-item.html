@@ -1,10 +1,13 @@
-<a class="pad-right">
-    <img src="pics/Angela_Martin.jpg" width="50" class="list-icon" style="padding-right:6px;"/>
-    <div class="story">
-    	<b><%= comment %></b>
-    	<span class="metadata">
-            <span class="link-text">by <%= user_id %></span><br/>
-            <span class="inline-block">25 minutes ago</span>
-        </span>
-    </div>
-</a>
+<div class="wrap">
+    <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+    <p id="info">Katy Butta 912 points 3 hours ago</p>
+    <p id="comment"><%= comment %></p>
+</div>
+<div class="datainput">
+    <input class="comment-reply" placeholder="reply to comment" />
+    <ul class="options clearfix">
+        <li class="vote">vote up</li>
+        <li class="vote">vote down</li>
+        <li class="reply">reply</li>
+    </ul>
+</div>

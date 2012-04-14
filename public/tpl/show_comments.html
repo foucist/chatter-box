@@ -1,11 +1,40 @@
-<div class="header">
-    <h1><%= discussion.discussion %></h1>
-    <a id="add_comment" class="header-button header-button-right header-save-button"><button>Post</button></a>
-</div>
-<div class="scroll striped" style="top:44px;">
-    <ul id="myList" class="tableview tableview-links"></ul>
-    <textarea id="commentText" class="input_textarea" onfocus="this.value=''" style="width:100%; height:70px; ">Add a comment here...</textarea>   
-    <input id="discussionId" value="<%= discussion_id %>" type="hidden" />
-</div>
+<div class="type_messageboard">
 
+    <div class="header bluegradient">
+        <a href="javascript: history.go(-1)"><div id="back"></div></a>
+        <h1>Message Board</h1>
+        
+    </div><!-- /header -->
+    
 
+   
+   <div class="toolbar topindent">
+        <div id="text"></div><h3><%= discussion.discussion %></h3>
+        <p>submitted 3 hours ago by username</p>
+   </div>
+   
+    <input id="discussionId" type="hidden" value="1" />
+   <ul class="thread clearfix">
+        <li id="replytotopic" class="clearfix">
+            <input id="topLevelCommentText" class="topic-reply" placeholder="reply to topic here" />
+           <ul class="options clearfix">
+                <li id="add_comment">reply</li>
+            </ul>
+        </li>
+    </ul>
+    <ul id="comments" class="thread clearfix">
+       
+   </ul>
+        
+    <div class="footer">
+      <ul>
+          <a href="groupchat.html"><li id="chat"></li></a>
+          <a href="messageboard.html"><li id="messageboard"></li></a>
+          <a href="channel_select.html"><li id="tvguide"></li></a>
+          <a href="products.html"><li id="products"></li></a>
+          <a href="profile.html"><li id="profile"></li></a>
+      </ul>
+    </div>
+    
+    
+    </div><!-- /content -->

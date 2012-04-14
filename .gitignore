@@ -6,4 +6,4 @@ ignore/
 .*.swp
 *.bak
 public/uploads
-
+*.DS_Store

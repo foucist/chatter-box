@@ -1,26 +1,58 @@
-<div data-role="page">
+<div class="type_checkin">
 
-	<div data-role="header">
-    	<a data-icon="arrow-l" data-rel="back">Back</a>
-        <h1></h1>
-        <a data-icon="star">Favorite</a>
-		
+	<div class="header bluegradient">
+    	<div id="back" class="header-back-button"></div>
+    	<h1>Selected Program</h1>
+    	
 	</div><!-- /header -->
 	
-
-	<div class="programmenu" data-role="content">	
-		<div class="coverphoto" id="entourage">
-        	<a href="#" id="checkin" data-role="button">Check-in</a>
-        </div>
+   
+   <ul class="program-list">
+   		<li>
+        	<div id="photowrap">
+            	
+            	<img src="images/TVshows/whitecollar.jpg" />
+            </div>
+            <div class="info">
+            	<h2>White Collar</h2>
+                <h3>Season 3 Episode 14</h3>
+            	
+                <ul id="stats">
+                	<li class="icon" id="people"></li>
+                    <li>13122</li>
+                    <li class="icon" id="friends"></li>
+                    <li>5</li>
+                    <li id="channel">NBC</li>
+                </ul>
+            </div>
         
+        </li>
+   </ul>
+   
+   <div class="menu clearfix">
+   		<div id="checkin">Check-in</div>
         <ul>
-        	<a href="#program/<%= id %>/show_chat"><li>Chat about the show</li></a>
-            <a href="#program/<%= id %>/show_discussions"><li>Discussion Board</li></a>
-            <a href="#program/<%= id %>/show_merchandise"><li>Cool items from the show</li></a>
+        	<a href="groupchat.html"><li><div class="icon" id="chat"></div>Group Chat</li></a>
+            <a href="products.html"><li><div class="icon" id="products"></div>Cool Products</li></a>
+            <a href="#program/1/show_discussions"><li><div class="icon" id="messageboard"></div>Message Board</li></a>
+            <li><div class="icon" id="polls"></div>Voting & Polls</li>
         </ul>
-	</div><!-- /content -->
-
-	<div data-role="footer">
+            
+   </div>
+        
+    <style>
 	
-	</div><!-- /footer -->
-</div><!-- /page -->
+	</style>
+        
+    <div class="footer">
+      <ul>
+          <a href="groupchat.html"><li id="chat"></li></a>
+          <a href="messageboard.html"><li id="messageboard"></li></a>
+          <a href="channel_select.html"><li id="tvguide"></li></a>
+          <a href="products.html"><li id="products"></li></a>
+          <a href="profile.html"><li id="profile"></li></a>
+      </ul>
+    </div>
+    
+    
+	</div><!-- /content -->

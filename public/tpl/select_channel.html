@@ -1,70 +1,124 @@
-<div data-role="page">
+<div class="type_home">
 
-	<div data-role="header" data-position="fixed">
-    	<a data-icon="gear" class="ui-btn-right special-btn"></a>
+  <div class="header bluegradient">
+      <ul class="pagetab bluegradient clearfix">
+          <li class="selected">Popular</li>
+            <li>Guide</li>
+            <li>Friends</li>
+        </ul>
+      
+  </div><!-- /header -->
+  
     
-		<fieldset data-role="controlgroup"  data-type="horizontal">
-          
-                <input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
-                <label for="radio-choice-1">Popular</label>
-        
-                <input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
-                <label for="radio-choice-2">Guide</label>
-                
-                <input type="radio" name="radio-choice-1" id="radio-choice-3" value="choice-3"  />
-                <label for="radio-choice-3">Faves</label>
-        
-                <input type="radio" name="radio-choice-1" id="radio-choice-4" value="choice-4"  />
-                <label for="radio-choice-4">Friends</label>
-        </fieldset>
-	</div><!-- /header -->
-	
-    <style>
-	
-	</style>
-	<div data-role="content">	
-		<ul class="channellist">
-        	<a href="#channel/1"><li>
-            	<div class="channel" id="channel3"></div>
-                <div class="coverphoto" id="ch3drama"></div>
-                <div id="title">เป็นข่าว</div>
-                <div id="stats">103 online</div>
-          	</li></a>
-            <li>
-            	<div class="channel" id="channel7"></div>
-                <div class="coverphoto" id="ch7drama"></div>
-                <div id="title">ฉันรักเธอนะ</div>
-                <div id="stats">31 online</div>
-          	</li>
-            <li>
-            	<div class="channel" id="channel5"></div>
-                <div class="coverphoto" id="ch5gameshow"></div>
-                <div id="title">Game Show</div>
-                <div id="stats">21 online</div>
-          	</li>
-            <li>
-            	<div class="channel" id="hbo"></div>
-                <div class="coverphoto" id="entourage"></div>
-                <div id="title">Entourage</div>
-                <div id="stats">8 online</div>
-          	</li>
-            <li>
-            	<div class="channel" id="nbc"></div>
-                <div class="coverphoto" id="a30rock"></div>
-                <div id="title">30 Rock</div>
-                <div id="stats">5 online</div>
-          	</li>
-            <li>
-            	<div class="channel" id="espn"></div>
-                <div class="coverphoto" id="football"></div>
-                <div id="title">Man U vs Chelsea</div>
-                <div id="stats">1 online</div>
-          	</li>
-        </ul>	
-        
-	</div><!-- /content -->
+    <ul class="time-select whitegradient">
+      <li>6:00pm</li>
+      <li>6:30pm</li>
+        <li>7:00pm</li>
+        <li class="selected redgradient">7:30pm</li>
 
-	<div data-role="footer">
-	
-	</div><!-- /footer -->
-</div><!-- /page -->
+    </ul>
+   
+   <ul class="program-list">
+      <a href="#program/1"><li>
+          <div id="photowrap">
+              
+              <img src="images/TVshows/whitecollar.jpg" />
+            </div>
+            <div class="info">
+              <h2>White Collar</h2>
+                <h3>Season 3 Episode 14</h3>
+              
+                <ul id="stats">
+                  <li class="icon" id="people"></li>
+                    <li>13122</li>
+                    <li class="icon" id="friends"></li>
+                    <li>5</li>
+                    <li id="channel">NBC</li>
+                </ul>
+                
+                <div id="r-arrow"></div>
+            </div>
+        
+        </li></a>
+       <li>
+          <div id="photowrap">
+              
+              <img src="images/TVshows/gameofthrones.jpg" />
+            </div>
+            <div class="info">
+              <h2>Game of Thrones</h2>
+                <h3>Season 1 Episode 2</h3>
+              
+                <ul id="stats">
+                  <li class="icon" id="people"></li>
+                    <li>12021</li>
+                    <li class="icon" id="friends"></li>
+                    <li>3</li>
+                    <li id="channel">HBO</li>
+                </ul>
+                
+                <div id="r-arrow"></div>
+            </div>
+        
+        </li>
+        <li>
+          <div id="photowrap">
+              
+              <img src="images/TVshows/newgirl.jpg" />
+            </div>
+            <div class="info">
+              <h2>New Girl</h2>
+                <h3>Season 1 Episode 12</h3>
+              
+                <ul id="stats">
+                  <li class="icon" id="people"></li>
+                    <li>6531</li>
+                    <li class="icon" id="friends"></li>
+                    <li>1</li>
+                    <li id="channel">FOX</li>
+                </ul>
+                
+                <div id="r-arrow"></div>
+            </div>
+        
+        </li>
+        <li>
+          <div id="photowrap">
+              
+              <img src="images/TVshows/entourage.jpg" />
+            </div>
+            <div class="info">
+              <h2>Entourage</h2>
+                <h3>Season 6 Episode 03</h3>
+              
+                <ul id="stats">
+                  <li class="icon" id="people"></li>
+                    <li>4192</li>
+                    <li class="icon" id="friends"></li>
+                    <li>0</li>
+                    <li id="channel">HBO</li>
+                </ul>
+                
+                <div id="r-arrow"></div>
+            </div>
+        
+        </li>
+   </ul>
+        
+        
+    <style>
+  
+  </style>
+        
+    <div class="footer">
+      <ul>
+          <a href="groupchat.html"><li id="chat"></li></a>
+          <a href="messageboard.html"><li id="messageboard"></li></a>
+          <a href="channel_select.html"><li id="tvguide"></li></a>
+          <a href="products.html"><li id="products"></li></a>
+          <a href="profile.html"><li id="profile"></li></a>
+      </ul>
+    </div>
+    
+    
+  </div><!-- /content -->

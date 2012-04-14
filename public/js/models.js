@@ -80,6 +80,7 @@ window.Comment = Backbone.Model.extend({
         return {
             discussion_id: -1,
             comment: "",
+            reply_to_comment_id: -1,
             deleted: false,
             user_id: -1,
             updated_at: null,
@@ -127,8 +128,8 @@ window.DiscussionsCollection = Backbone.Collection.extend({
         }
     },
 
-    findByName:function (key) {
-        this.reset(store.findByName(key));
+    findByDiscussion:function (key) {
+        this.reset(store.findByDiscussion(key, this.program_id));
     }
 });
 

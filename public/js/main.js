@@ -50,7 +50,7 @@ var AppRouter = Backbone.Router.extend({
             });
         }
 
-        $('#content').on("click", "#add_discussion", function(event) {
+        $('#content').on("click", ".add_discussion", function(event) {
             var programId = $('#programId').val(); 
             var newDiscussion = $('#discussionTopic').val();
             var discussion = new Discussion({
@@ -64,7 +64,7 @@ var AppRouter = Backbone.Router.extend({
 
         $('#content').on("click", "#add_comment", function(event) {
             var discussionId = $('#discussionId').val(); 
-            var newComment = $('#commentText').val();
+            var newComment = $('#topLevelCommentText').val();
             var comment = new Comment();
             comment.save({
                             discussion_id: parseInt(discussionId),
@@ -146,7 +146,10 @@ var AppRouter = Backbone.Router.extend({
 // We keep a single instance of the DiscussionPage and its associated Discussion collection throughout the app<-- not the case
         var discussionsCollection = new DiscussionsCollection();
         discussionsCollection.program_id = program_id;
+        
         discussionsCollection.fetch();
+        //discussionsCollection.loadData(program_id);
+
         var discussionsPage = new ShowDiscussionsPage({model: discussionsCollection});
 
         this.activePage = discussionsPage; 

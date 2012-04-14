@@ -39,9 +39,9 @@ store = {
         this.programs[4] = {id: 4, channel_id: 1,program: "Master Key Game Show", tagline: "2kg of gold at stake", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
         this.programs[5] = {id: 5, channel_id: 2,program: "CSI: Bangkok", tagline: "Who is the killer?", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
 
-        this.discussions[1] = {id: 1, program_id: 1, user_id: 1, discussion: 'Do you think Aum looks hot in jeans?', updated_at: Date.now()};
-        this.discussions[2] = {id: 2, program_id: 1, user_id: 1, discussion: 'How should the ending story be?', updated_at: Date.now()};
-        this.discussions[3] = {id: 3, program_id: 1, user_id: 2, discussion: 'Why did Reya hit her mother?', updated_at: Date.now()};
+        this.discussions[1] = {id: 1, program_id: 1, user_id: 1, discussion: 'What happens to Peter?', updated_at: Date.now()};
+        this.discussions[2] = {id: 2, program_id: 1, user_id: 1, discussion: 'Who is your favorite character?', updated_at: Date.now()};
+        this.discussions[3] = {id: 3, program_id: 1, user_id: 2, discussion: 'Season Finale?', updated_at: Date.now()};
         this.discussions[4] = {id: 4, program_id: 2, user_id: 3, discussion: 'Can we use ChatterBox to win the prize?', updated_at: Date.now()};
         this.discussions[5] = {id: 5, program_id: 2, user_id: 4, discussion: 'Is this gameshow too easy?', updated_at: Date.now()};
 
@@ -72,6 +72,17 @@ store = {
         for (var id in this.questions) {
             if ( (this.questions[id].questionText + " " + this.questions[id].answerText).toLowerCase().indexOf(key.toLowerCase()) >= 0) {
                 results.push(this.questions[id]);
+            }
+        }
+        return results;
+    },
+
+    findByDiscussion: function(key, program_id) {
+        var results = [];
+        for (var id in this.discussions) {
+            if (    (this.discussions[id].program_id === program_id )    &&
+                    (this.discussions[id].discussion).toLowerCase().indexOf(key.toLowerCase()) >= 0) {
+                results.push(this.discussions[id]);
             }
         }
         return results;

@@ -6,6 +6,7 @@ a {
 .ui-content{
 	padding:0;
 }
+
 /* `PROGRAM SELECT
 ----------------------------------------------------------------------------------------------------*/
 .program_select .ui-btn-inner{
@@ -41,7 +42,7 @@ a {
 	background:#333;
 }
 .channellist .channel{
-	background:url(images/channels.png) no-repeat;
+	background:url(../images/channels.png) no-repeat;
 	float:left;
 	width:50px;
 	height:60px;
@@ -211,21 +212,21 @@ a {
 	color:inherit;
 }
 .messageboard ul li #comment{
-	background:url(images/sprites/16_comments.png);
+	background:url(../images/sprites/16_comments.png);
 	width:16px;
 	height:16px;
 	float:right;
 	margin-left:5px;
 }
 .messageboard ul li #edit{
-	background:url(images/sprites/16_edit.png);
+	background:url(../images/sprites/16_edit.png);
 	width:16px;
 	height:16px;
 	float:right;
 	margin:10px 10px 0 5px;
 }
 .messageboard ul li #poll{
-	background:url(images/sprites/24_poll.png);
+	background:url(../images/sprites/24_poll.png);
 	width:24px;
 	height:24px;
 	float:left;
@@ -242,13 +243,13 @@ a {
 /*  MERCHANDISE
 ----------------------------------------------------------------------------------------------------*/
 .merchandise{
-	background:url(images/background/lightbg_@2x.jpg) repeat;
+	background:url(../images/background/lightbg2_@2x.jpg) repeat;
 }
 .productcontainer{
 	background:rgba(153,153,153,0.40);
 	width:300px;
 	margin:10px 10px;
-	box-shadow:0px 0px 4px rgba(0,0,0,.42);
+	box-shadow:0px 0px 6px rgba(0,0,0,.8);
 	
 }
 .productcontainer #photo{
@@ -284,7 +285,7 @@ a {
 	font-weight:bold;
 }
 .productcontainer .info .icon{
-	background:url(images/sprites/icons.png) no-repeat;
+	background:url(../images/sprites/icons.png) no-repeat;
 	width:13px;
 	height:13px;
 	float:left;
@@ -298,6 +299,9 @@ a {
 }
 .productcontainer .info .icon#pricetag{
 	background-position:-30px 0;
+}
+.productcontainer .info .icon#clock{
+	background-position:0px -15px;
 }
 .buy-button {
 	color: white;
@@ -332,7 +336,7 @@ a {
 ----------------------------------------------------------------------------------------------------*/
 
 .settings{
-	background:url(images/background/darkbg.png);
+	background:url(../images/background/darkbg.png);
 	width:100%;
 	height:100%;
 	background-size: 100%;
@@ -365,13 +369,13 @@ a {
 	padding:20px 20px;
 }
 #fblogin{
-	background:url(images/sprites/buttons.png) no-repeat;
+	background:url(../images/sprites/buttons.png) no-repeat;
 	width:250px;
 	height:42px;
 	margin:0 auto 10px auto;
 }
 #twitterlogin{
-	background:url(images/sprites/buttons.png) no-repeat 0 -50px;
+	background:url(../images/sprites/buttons.png) no-repeat 0 -50px;
 	width:250px;
 	height:42px;
 	margin:0 auto;
@@ -414,22 +418,22 @@ a {
 /* TV SHOWS
 ----------------------------------------------------------------------------------------------------*/
 #entourage{
-	background:url(images/TVshows/entourage.jpg);
+	background:url(../images/TVshows/entourage.jpg);
 }
 #a30rock{
-	background:url(images/TVshows/30rock.jpg);
+	background:url(../images/TVshows/30rock.jpg);
 }
 #football{
-	background:url(images/TVshows/football.jpg);
+	background:url(../images/TVshows/football.jpg);
 }
 #ch3drama{
-	background:url(images/TVshows/ch3drama.jpg);
+	background:url(../images/TVshows/ch3drama.jpg);
 }
 #ch7drama{
-	background:url(images/TVshows/ch7drama.jpg);
+	background:url(../images/TVshows/ch7drama.jpg);
 }
 #ch5gameshow{
-	background:url(images/TVshows/ch5gameshow.jpg);
+	background:url(../images/TVshows/ch5gameshow.jpg);
 }
 
 
