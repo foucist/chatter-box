@@ -162,8 +162,13 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 window.CommentsCollection = Backbone.Collection.extend({
     model: Comment,
     discussion_id: -1,
-    url: '/discussions/'+this.model.discussion_id+'/comments.json',
+    url: '',
     
+    initialize:function (discussion_id) {
+        this.discussion_id = discussion_id;
+        this.url = '/discussions/'+discussion_id+'/comments.json';
+    },
+
     sync: function (method, model) {
       var self = this;
         switch (method) {
