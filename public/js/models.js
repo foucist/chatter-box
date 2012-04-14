@@ -1,5 +1,6 @@
 //Model
 window.Program = Backbone.Model.extend({
+    urlRoot: '/programs',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -29,6 +30,7 @@ window.Program = Backbone.Model.extend({
 });
 
 window.Discussion = Backbone.Model.extend({
+    urlRoot: '/discussions',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -61,6 +63,7 @@ window.Discussion = Backbone.Model.extend({
 });
 
 window.Comment = Backbone.Model.extend({
+  urlRoot: '/discussions/1/comments',
     sync: function (method, model, options) {
         switch (method) {
             case "read":
@@ -91,6 +94,7 @@ window.Comment = Backbone.Model.extend({
 
 //Collection
 window.ProgramsCollection = Backbone.Collection.extend({
+  url: '/programs.json',
     model: Program,
     channel_id: -1,
 
@@ -111,13 +115,22 @@ window.ProgramsCollection = Backbone.Collection.extend({
 
 
 window.DiscussionsCollection = Backbone.Collection.extend({
+  url: '/discussions.json',
     model: Discussion,
     program_id: -1,
-
+  
     sync: function (method, model) {
+      var self = this;
         switch (method) {
             case "read":
-                this.reset(store.findDiscussions(model.program_id)); 
+              $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: "/discussions.json",
+                success: function(data) { 
+                  self.reset(data);
+                }
+              });
                 break;
             case "update":
                 alert("collection update");
@@ -136,17 +149,21 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 window.CommentsCollection = Backbone.Collection.extend({
     model: Comment,
     discussion_id: -1,
+    url: '/discussions/'+model.discussion_id+'/comments.json',
 
     sync: function (method, model) {
+      var self = this;
         switch (method) {
-            case "read":
-                this.reset(store.findComments(model.discussion_id));
-                /* TODO
-                $.ajax({
-                    STUFF
-                }); 
-                */
-                break;
+          case "read":
+            $.ajax({
+              type: 'get',
+              dataType: 'json',
+              url: '/discussions/'+model.discussion_id+'/comments.json',
+              success: function(data) { 
+                self.reset(data);
+              }
+            });
+            break;
             case "update":
                 alert("collection update");
                 break;

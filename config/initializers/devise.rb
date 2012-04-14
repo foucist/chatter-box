@@ -199,11 +199,11 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   #
-  # require 'omniauth-facebook'
-  #
-  config.omniauth :facebook,'214716595297052','6ddb09270e74336ec2472d1cc09a2c7b', {:display => 'touch'}
+  config.omniauth :twitter,'SzirorG1OBgvHIvJQ2TuQ','RD3xMX3tb8vOGyC7HOunakro5RyDGEQhKO3LBhSeE'
+
   # for heroku  do it like this
   # config.omniauth :facebook,'214716595297052','6ddb09270e74336ec2472d1cc09a2c7b', {:scope => 'email, offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} 
+  config.omniauth :facebook,'214716595297052','6ddb09270e74336ec2472d1cc09a2c7b', {:display => 'touch'}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

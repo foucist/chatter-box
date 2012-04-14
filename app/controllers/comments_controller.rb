@@ -4,12 +4,12 @@ class CommentsController < ApplicationController
 
   def index
     @comments = @discussion.comments
-    respond_with @comments
+    respond_with @comments.to_json(:methods => :comment)
   end
 
   def show
     @comment = @discussion.comments.find(params[:id])
-    respond_with @comment 
+    respond_with @comment.to_json(:methods => :comment)
   end
 
   def new

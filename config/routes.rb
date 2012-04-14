@@ -10,5 +10,5 @@ Chatterbox::Application.routes.draw do
     resources :comments
   end
 
-  root :to => 'discussion#index'
+  root :to => 'discussions#index'
 end

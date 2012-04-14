@@ -4,12 +4,12 @@ class DiscussionsController < ApplicationController
 
   def index
     @discussions = Discussion.all
-    respond_with @discussions
+    respond_with @discussions.to_json(:methods => :discussion)
   end
 
   def show
     @discussion = Discussion.find(params[:id])
-    respond_with @discussion 
+    respond_with @discussion.to_json(:methods => :discussion)
   end
 
   def new
