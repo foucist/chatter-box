@@ -1,6 +1,69 @@
 //Model
 USING_RAILS_SERVER = false;
 
+window.User = Backbone.Model.extend({
+    validate: function(attrs) {
+        if(attrs.username==="") {
+            return("Username can't be empty"); 
+        }
+        if(attrs.email==="") { 
+            return("Email can't be empty"); 
+        }
+        if(attrs.password==="") { 
+            return("Password can't be empty"); 
+        }
+    },
+
+    login: function() {
+        
+        var isLoggedIn = false;
+        if(USING_RAILS_SERVER) { 
+            //return isLoggedIn boolean 
+            alert("TODO: link with Rails: create a new user"); 
+        } else {
+            isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
+        }
+        return isLoggedIn;
+    }, 
+
+    sync: function (method, model, options) {
+        switch (method) {
+            case "read":
+                alert("reading data from the server")
+                break;
+            case "update":
+                alert("update something");
+                break;
+            case "create":
+                //get the data and verify whether it is successfully loggin or not
+                var result = "FAILED"
+                if(USING_RAILS_SERVER) { 
+                    //return 'success' or an error message and set it to result
+                    alert("TODO: link with Rails: create a new user"); 
+                } else {
+                    result = store.createAccount(model);
+                }
+
+                if(result === "success")
+                   options.success(model);
+                else 
+                    options.error(model,"ERROR MESSAGE HERE: "+result);
+                break;
+        }
+    },
+
+    defaults: function() {
+        return {
+            username: "",
+            email: "",
+            password: "",
+            img: "",
+            fb_auth_token: "",
+            tw_auth_token: ""
+        };
+    },
+});
+
 window.Program = Backbone.Model.extend({
     urlRoot: '/programs',
     sync: function (method, model, options) {
@@ -38,7 +101,11 @@ window.Discussion = Backbone.Model.extend({
             case "read":
                 if (model.id) {
                     // Request to read a single item identified by its id.
-                    options.success(store.findDiscussionById(model.id));
+                    if(USING_RAILS_SERVER) { 
+                        alert("TODO: link with Rails"); 
+                    } else {
+                        options.success(store.findDiscussionById(model.id));
+                    }
                 }
                 break;
             case "update":

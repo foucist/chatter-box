@@ -31,8 +31,12 @@ store = {
     programs: {},
     discussions: {},
     comments: {},
+    users: {},
 
     populate: function() {
+        this.users[1] = {id: 1, username: 'titaniummick', email: 'akavin@gmail.com', password: 'a', img:"mickey.png", fb_auth_token:"ssdd", tw_auth_token:"ddss"};
+        this.users[2] = {id: 2, username: 'foucist', email: 'james@canada.com', password: 'j', img:"jamies.png", fb_auth_token:"ffgg", tw_auth_token:"ggff"};
+
         this.programs[1] = {id: 1, channel_id: 1,program: "Dok Som See Thong", tagline: "second scene", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
         this.programs[2] = {id: 2, channel_id: 1,program: "Who want to be the millionaire?", tagline: "Jackpot round", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
         this.programs[3] = {id: 3, channel_id: 1,program: "Prime Minister News", tagline: "Is Thailand prepare for next year?", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
@@ -150,6 +154,27 @@ store = {
                                                 updated_at: Date.now()
                                             };
         return this.comments[numComments+1];
+    },
+
+    createAccount: function(userModel) {
+        var numUsers = Object.keys(this.users).length;
+        this.users[numUsers+1] = {  id: numUsers+1, 
+                                       username: userModel.get('username'),
+                                       password: userModel.get('password'), 
+                                       email: userModel.get('email')
+                                   };
+        return "success";
+    },
+
+    authenticateAccount: function(usernameOrEmail, password) {
+        for (var id in this.users) {
+            if ( (this.users[id].username === usernameOrEmail && this.users[id].password === password) ||
+                 (this.users[id].email === usernameOrEmail && this.users[id].password === password)
+                ) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
