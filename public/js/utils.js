@@ -34,8 +34,8 @@ store = {
     users: {},
 
     populate: function() {
-        this.users[1] = {id: 1, username: 'titaniummick', email: 'akavin@gmail.com', password: 'a', img:"mickey.png", fb_auth_token:"ssdd", tw_auth_token:"ddss"};
-        this.users[2] = {id: 2, username: 'foucist', email: 'james@canada.com', password: 'j', img:"jamies.png", fb_auth_token:"ffgg", tw_auth_token:"ggff"};
+        this.users[1] = {id: 5, username: 'a', email: 'akavin@gmail.com', password: 'a', img:"mickey.png", fb_auth_token:"ssdd", tw_auth_token:"ddss"};
+        this.users[2] = {id: 2, username: 'b', email: 'james@canada.com', password: 'b', img:"jamies.png", fb_auth_token:"ffgg", tw_auth_token:"ggff"};
 
         this.programs[1] = {id: 1, channel_id: 1,program: "Dok Som See Thong", tagline: "second scene", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
         this.programs[2] = {id: 2, channel_id: 1,program: "Who want to be the millionaire?", tagline: "Jackpot round", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
@@ -163,7 +163,7 @@ store = {
                                        password: userModel.get('password'), 
                                        email: userModel.get('email')
                                    };
-        return "success";
+        return "duplicate email..try again";
     },
 
     authenticateAccount: function(usernameOrEmail, password) {
@@ -171,7 +171,7 @@ store = {
             if ( (this.users[id].username === usernameOrEmail && this.users[id].password === password) ||
                  (this.users[id].email === usernameOrEmail && this.users[id].password === password)
                 ) {
-                return true;
+                return this.users[id];
             }
         }
         return false;

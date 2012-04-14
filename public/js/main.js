@@ -58,7 +58,7 @@ var AppRouter = Backbone.Router.extend({
             var discussion = new Discussion({
                 program_id: parseInt(programId),
                 discussion: newDiscussion,
-                user_id: 1
+                user_id: self.loggedInUser.get('id')
             });
             discussion.save();
             window.location = "#program/"+programId+"/show_discussions";
@@ -71,7 +71,7 @@ var AppRouter = Backbone.Router.extend({
             comment.save({
                             discussion_id: parseInt(discussionId),
                             comment: newComment,
-                            user_id: 1
+                            user_id: self.loggedInUser.get('id')
                         },
                         {
                             success: function(data) {
@@ -79,7 +79,6 @@ var AppRouter = Backbone.Router.extend({
                                self.activePage.model.add(data);
                             }
                         });
-            //self.activePage.render(); //TODO <-- fix this
         });
 
         //signing up
@@ -125,10 +124,12 @@ var AppRouter = Backbone.Router.extend({
 
             //alert("signing up, username: "+username+",email: "+email+",password: "+password+",cf password: "+confirmPassword);
             var loggingInCandidate = new User({username:usernameOrEmail, password:password});
-            var loginStatus = loggingInCandidate.login();
-            if(loginStatus) {
+            var loggedIn = loggingInCandidate.login();
+            if(loggedIn) {
                 alert("successfully logged in");
-                self.loggedInUser = loggingInCandidate;
+                var tmpLoggedInUser = new User();
+                tmpLoggedInUser.set(loggedIn); //convert obj to backbone obj
+                self.loggedInUser = tmpLoggedInUser;
                 window.location = "#select_channel";
             } else {
                 alert("dude...you can't remember your password?");
