@@ -4,6 +4,8 @@ Chatterbox::Application.routes.draw do
   #match 'logout', :to => 'users/sessions#destroy',  :as => "destroy_user_session"
   #match 'signup', :to => 'users/registrations#new', :as => "new_user_registration"
 
+  resources :twitter
+
   resources :discussions do
     resources :comments
   end
