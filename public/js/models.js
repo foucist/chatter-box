@@ -1,4 +1,6 @@
 //Model
+USING_RAILS_SERVER = false;
+
 window.Program = Backbone.Model.extend({
     urlRoot: '/programs',
     sync: function (method, model, options) {
@@ -43,9 +45,12 @@ window.Discussion = Backbone.Model.extend({
                 alert("update something");
                 break;
             case "create":
-                store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id'));              
-                var data = {"discussion":{program_id: model.get('program_id'), title: model.get('discussion'), user_id: model.get('user_id')}};
-                $.post('discussions.json', data);
+                if(USING_RAILS_SERVER) {
+                    var data = {"discussion":{program_id: model.get('program_id'), title: model.get('discussion'), user_id: model.get('user_id')}};
+                    $.post('discussions.json', data);
+                } else {
+                    store.createDiscussion(model.get('program_id'), model.get('discussion'), model.get('user_id'));              
+                }
                 break;
         }
     },
@@ -71,10 +76,14 @@ window.Comment = Backbone.Model.extend({
             case "update":
                 break;
             case "create":
-                var newComment = store.createNewComment(model.get('discussion_id'), model.get('comment'), model.get('user_id')); 
-                options.success(newComment);              
-                var data = {"comment":{body: model.get('comment'), user_id: model.get('user_id')}};
-                $.post('/discussions/'+model.get('discussion_id') +'/comments.json', data);
+                if(USING_RAILS_SERVER) {
+                    var data = {"comment":{body: model.get('comment'), user_id: model.get('user_id')}};
+                    $.post('/discussions/'+model.get('discussion_id') +'/comments.json', data);      
+                    options.success(data);    
+                } else {        
+                    var newComment = store.createNewComment(model.get('discussion_id'), model.get('comment'), model.get('user_id')); 
+                    options.success(newComment);
+                }
                 break;
         }
     },
@@ -123,14 +132,18 @@ window.DiscussionsCollection = Backbone.Collection.extend({
       var self = this;
         switch (method) {
             case "read":
-              $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: "/discussions.json",
-                success: function(data) { 
-                  self.reset(data);
+                if(USING_RAILS_SERVER) {
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: "/discussions.json",
+                        success: function(data) { 
+                          self.reset(data);
+                        }
+                    });
+                } else {
+                    this.reset(store.findDiscussions(self.program_id));
                 }
-              });
                 break;
             case "update":
                 alert("collection update");
@@ -149,20 +162,24 @@ window.DiscussionsCollection = Backbone.Collection.extend({
 window.CommentsCollection = Backbone.Collection.extend({
     model: Comment,
     discussion_id: -1,
-    url: '/discussions/'+model.discussion_id+'/comments.json',
-
+    url: '/discussions/'+this.model.discussion_id+'/comments.json',
+    
     sync: function (method, model) {
       var self = this;
         switch (method) {
-          case "read":
-            $.ajax({
-              type: 'get',
-              dataType: 'json',
-              url: '/discussions/'+model.discussion_id+'/comments.json',
-              success: function(data) { 
-                self.reset(data);
-              }
-            });
+            case "read":
+            if(USING_RAILS_SERVER) {
+                $.ajax({
+                  type: 'get',
+                  dataType: 'json',
+                  url: '/discussions/'+model.discussion_id+'/comments.json',
+                  success: function(data) { 
+                    self.reset(data);
+                  }
+                });
+            } else {
+                this.reset(store.findComments(self.discussion_id));
+            }
             break;
             case "update":
                 alert("collection update");
