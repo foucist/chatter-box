@@ -94,26 +94,27 @@ var AppRouter = Backbone.Router.extend({
                 return; 
             }
 
-            //alert("signing up, username: "+username+",email: "+email+",password: "+password+",cf password: "+confirmPassword);
-            var newUser = new User();
-            newUser.save({
-                            username: username,
-                            email: email,
-                            password: password
-                        },
-                        {
-                            success: function(data) {
-                               //add the new comment to CommentCollection
-                               //self.activePage.model.add(data);
-                                alert("successfully added it");
-                                self.loggedInUser = data;
-                                window.location = "#select_channel";
-                            },
-                            error: function(data, error) {
-                                alert(error);
-                                self.loggedInUser = null;
-                            }
-                    });
+            if(USING_RAILS_SERVER) {
+                $.ajax({
+                    type: 'post',
+                    data: {"user":{"email":model.get('email'),"username":model.get('username'), "password": model.get('password'), "password_confirmation":model.get('password')}},
+                    dataType: 'json',
+                    url: "/users.json",
+                    success: function(response) {
+                        self.loggedInUser = data;
+                        window.location = "#select_channel"; //redirect
+                    },
+                    error: function(response) {
+                      alert(response.responseText);
+                    }
+                  });
+            } else { ////USING LOCAL MEMORY--always successfully create in this case
+                var newUser = new User({username: username,email: email,password: password});
+                store.createAccount(newUser);
+                alert("successfully added it");
+                self.loggedInUser = newUser;
+                window.location = "#select_channel"; //redirect
+            }
         });
 
         //logging in
@@ -124,16 +125,45 @@ var AppRouter = Backbone.Router.extend({
 
             //alert("signing up, username: "+username+",email: "+email+",password: "+password+",cf password: "+confirmPassword);
             var loggingInCandidate = new User({username:usernameOrEmail, password:password});
-            var loggedIn = loggingInCandidate.login();
-            if(loggedIn) {
-                alert("successfully logged in");
-                var tmpLoggedInUser = new User();
-                tmpLoggedInUser.set(loggedIn); //convert obj to backbone obj
-                self.loggedInUser = tmpLoggedInUser;
-                window.location = "#select_channel";
-            } else {
-                alert("dude...you can't remember your password?");
+            var loggedInObj = null;
+
+            if(USING_RAILS_SERVER) {
+                $.ajax({
+                    type: 'post',
+                    data: {"user":{"login": this.get('username'), "password": this.get('password')}},
+                    dataType: 'json',
+                    url: "/users/sign_in.json",
+                    success: function(response) {
+                        loggedInObj = response;
+                        if(loggedInObj) {  //if cannot login, loggedInObj is 'false'
+                            alert("successfully logged in");
+                            var tmpLoggedInUser = new User();
+                            tmpLoggedInUser.set(loggedInObj); //convert obj to backbone obj
+                            self.loggedInUser = tmpLoggedInUser;
+                            window.location = "#select_channel";
+                        } else {
+                            alert("dude...you can't remember your password?");
+                            //not going anywhere
+                        }
+                    },
+                    error: function(response) {
+                        alert(response.responseText);
+                        //not going anywhere
+                    }
+                  });
+            } else {  //USING LOCAL MEMORY
+                loggedInObj = store.authenticateAccount(usernameOrEmail,password);
+                if(loggedInObj) {  //if cannot login, loggedInObj is 'false'
+                    alert("successfully logged in");
+                    var tmpLoggedInUser = new User();
+                    tmpLoggedInUser.set(loggedInObj); //convert obj to backbone obj
+                    self.loggedInUser = tmpLoggedInUser;
+                    window.location = "#select_channel";
+                } else {
+                    alert("dude...you can't remember your password?");
+                }
             }
+            
         }); 
         
     },

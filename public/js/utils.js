@@ -176,7 +176,7 @@ store = {
                                        password: userModel.get('password'), 
                                        email: userModel.get('email')
                                    };
-        return "duplicate email..try again";
+        return "success";
     },
 
     authenticateAccount: function(usernameOrEmail, password) {

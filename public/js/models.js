@@ -28,44 +28,6 @@ window.User = Backbone.Model.extend({
         }
     },
 
-    login: function() {
-        
-        var isLoggedIn = false;
-        if(USING_RAILS_SERVER) { 
-            //return isLoggedIn boolean 
-            alert("TODO: link with Rails: create a new user"); 
-        } else {
-            isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
-        }
-        return isLoggedIn;
-    }, 
-
-    sync: function (method, model, options) {
-        switch (method) {
-            case "read":
-                alert("reading data from the server")
-                break;
-            case "update":
-                alert("update something");
-                break;
-            case "create":
-                //get the data and verify whether it is successfully loggin or not
-                var result = "FAILED"
-                if(USING_RAILS_SERVER) { 
-                    //return 'success' or an error message and set it to result
-                    alert("TODO: link with Rails: create a new user"); 
-                } else {
-                    result = store.createAccount(model);
-                }
-
-                if(result === "success")
-                   options.success(model);
-                else 
-                    options.error(model,"ERROR MESSAGE HERE: "+result);
-                break;
-        }
-    },
-
     defaults: function() {
         return {
             username: "",
