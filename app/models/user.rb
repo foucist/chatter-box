@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
 
   has_many :authentications
 
-  attr_accessor :login
+  attr_accessor :login, :token
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me,
-                  :authentication_token, :image, :image_cache, :remove_image, :id
+                  :token, :image, :image_cache, :remove_image, :id
 
   validates_integrity_of  :image
   validates_processing_of :image
@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
 
   def password_required?; false; end
 
+  def token
+    self.authentications.find_by_provider('facebook').token rescue ''
+  end
   # for username OR email login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -57,8 +60,10 @@ class User < ActiveRecord::Base
       if (session["omniauth"] rescue false)
         case session["omniauth"]['provider']
         when 'facebook'
+            name = session["omniauth"]["info"]["name"]
           if data = session["omniauth"] && session["omniauth"]["extra"]["raw_info"]
             user.email = data["email"]
+            user.username = name
           end
         when 'twitter'
           if data = session["omniauth"]["info"]
@@ -74,6 +79,7 @@ class User < ActiveRecord::Base
   def apply_facebook(omniauth)
     if (extra = omniauth['extra']['raw_info'] rescue false)
       self.email = (extra['email'] rescue '')
+      self.username = (extra['username'] rescue '')
     end
   end
 

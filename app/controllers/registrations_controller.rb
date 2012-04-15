@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    respond_with current_user
+    respond_with current_user.to_json(:methods => :token)
   end
 
   private
