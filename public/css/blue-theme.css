@@ -15,6 +15,14 @@ body, ul, li{
 li{
 	list-style:none;
 }
+ .notification{
+	width:100%;
+	background:#DD4C51;
+	padding:10px 0;
+	text-align:center;
+	color:white;
+	text-shadow:0 -1px 0 rgba(0,0,0,.8);
+}
 /* Header
 ----------------------------------------------------------------------------------------------------*/
 .header{
@@ -287,6 +295,10 @@ li{
 	color:white;
 	text-shadow:0 1px 3px rgba(0,0,0,.50);
 }
+.type_checkin .notification{
+  display:none;
+  margin-top:-10px;
+}
 #checkin:active{
 	box-shadow:inset 0 0 2px rgba(0,0,0,1);
 }
@@ -555,7 +567,7 @@ li{
 }
 /* GROUP CHAT
 ----------------------------------------------------------------------------------------------------*/
-.type_groupchat .toolbar h3{
+.type_groupchat .toolbar h3, .type_marketplace .toolbar h3{
 	padding:0 10px;
 	line-height:48px;
 	float:left;
@@ -564,7 +576,7 @@ li{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.type_groupchat .toolbar small{
+.type_groupchat .toolbar small, .type_marketplace .toolbar small{
 	margin-right:30px;
 }
 .toolbar #online{
@@ -608,7 +620,7 @@ li{
 	top:13px;
 	left:12px;
 }
-.chatarea{
+.chatarea, .productlisting{
 	background:url(../images/background/bluebg.jpg);
 	width:100%;
 	padding-bottom:30px;
@@ -697,7 +709,7 @@ li{
 	float:right;
 	margin: 5px 5px 0 0px;
 }
-.type_groupchat h1{
+.type_groupchat h1, .type_marketplace h1{
 	width: 120px;
 	float: left;
 }
@@ -721,6 +733,62 @@ li{
 	border-radius:0;
 	border-top-right-radius:5px;
 	border-bottom-right-radius:5px;
+}
+
+.type_marketplace .header h1{
+	width:200px;
+}
+/*  PRODUCTS
+----------------------------------------------------------------------------------------------------*/
+.productlisting{
+	position:relative;
+	padding:10px 0;
+}
+.productlisting li{
+	position:relative;
+	margin:0 0 20px 0;
+}
+.productlisting li #photowrap{
+	position:relative;
+	width:123px;
+	height:159px;
+	float:none;
+	display:inline-block;
+	margin-bottom:-5px;
+	z-index:10;
+	overflow:visible;
+}
+.productlisting li #photowrap:after{
+	content:'';
+	width:0px;
+	height:0px;
+}
+.productlisting li #photowrap:first-child{
+	margin-left:30px;
+}
+.productlisting li #photowrap img{
+	width:115px;
+	height:151px;
+	margin:4px;
+}
+.productlisting #shelf{
+	content:"";
+	background:url(../images/sprites/buttons.png) no-repeat 0 -350px;
+	width:300px;
+	height:25px;
+	position:relative;
+	margin:0 auto;
+	z-index:9;
+}
+.productlisting .reward:before{
+	content:"";
+	background:url(../images/sprites/buttons.png) -110px -150px;
+	width:38px;
+	height:39px;
+	position:absolute;
+	bottom:-38px;
+	left:40px;
+	z-index:9999;
 }
 
 /*  SETTINGS
@@ -1215,3 +1283,8 @@ input, textarea{
     -webkit-transition-duration: .375s;
     -o-transition-duration: .375s;
 }
+/* * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView
+}
+ */
