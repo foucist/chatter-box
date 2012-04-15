@@ -90,10 +90,21 @@ window.ShowProgramActivityPage = Backbone.View.extend({
     },
     //this.model is a collection here
     render:function (eventName) {
-        $(this.el).html(this.template(this.model.toJSON()));
+        var modelJSON = this.model.toJSON(); 
+
+
+        $(this.el).html(this.template(modelJSON));
+        if(this.options.isUserCheckedIn) {
+            $(".type_checkin .notification", this.el).show();
+            $(".type_checkin #checkin", this.el).hide();
+        } else {
+            $(".type_checkin .notification", this.el).hide();
+            $(".type_checkin #checkin", this.el).show();
+        }
+
         $("#checkin", this.el).click(function(){
-            $(".type_checkin #checkin", this.el).toggle();
-            $(".type_checkin .notification", this.el).toggle();
+            $(".type_checkin #checkin", this.el).hide();
+            $(".type_checkin .notification", this.el).show();
         }); 
         return this;
     },
@@ -226,10 +237,10 @@ window.CommentListItemView = Backbone.View.extend({
     }
 });
 
-window.ShowMerchandisePage = Backbone.View.extend({
+window.ShowProductsPage = Backbone.View.extend({
 
     initialize:function () {
-        this.template = _.template(tpl.get('show_program_merchandise'));
+        this.template = _.template(tpl.get('show_products'));
     },
     //this.model is a collection here
     render:function (eventName) {

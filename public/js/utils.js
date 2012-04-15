@@ -209,7 +209,20 @@ store = {
             }
         }
         return results;
-    }
+    },
+
+    createNewCheckin: function(user_id, program_id) {
+        var numCheckins = Object.keys(this.checkins).length;
+        this.checkins[numCheckins+1] = {  
+                                            id: numCheckins+1, 
+                                            user_id: user_id,
+                                            program_id: program_id, 
+                                            check_in_time: Date.now(),
+                                            updated_at: Date.now(),
+                                            created_at: Date.now()
+                                        };
+        return this.checkins[numCheckins+1];
+    },
 }
 
 store.populate();
