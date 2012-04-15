@@ -1,79 +1,47 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<meta charset="utf-8" />
-	<head> 
-	<title>Program Select</title> 
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<div class="type_marketplace">
 
-	<link rel="stylesheet" href="css/jquery.mobile-1.1.0-rc.1.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
-	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    <div class="header bluegradient">
+        <a href="javascript: history.go(-1)"><div id="back"></div></a>
+        <h1>Marketplace</h1>
+    </div><!-- /header -->
     
-    <style>
-	
-	</style>
-</head> 
-<body> 
-
-<div class="merchandise" data-role="page">
-
-	<div data-role="header">
-    	<a data-icon="arrow-l" data-rel="back">Back</a>
-        <h1>Entourage</h1>
-		
-	</div><!-- /header -->
-	
-
-	<div data-role="content">	
-		<div class="productcontainer clearfix">
-        	<div id="photo" ><img src="images/items/shoe.jpg" width="175" /></div>
+    <div id="wrapper">
+        <div id="scroller">
+   
+         <div class="toolbar topindent">
+              <h3><small>You are watching</small>White Collar</h3>
+              <div id="dropdown"></div>
+         </div>
+         
+         <ul class="productlisting clearfix">
+         
+            <li class="clearfix">
+                <div class="reward" id="photowrap"><img src="images/products/product1.jpg" /></div>
+                <div id="photowrap"><img src="images/products/product2.jpg" /></div>
+                <div id="shelf"></div>
+            </li>
             
-            <div class="info clearfix">
-            	<div id="title">Shoe by Armani</div>
-                <ul>
-                	<li><div class="icon" id="love"></div>14</li>
-                    <li><div class="icon" id="comment"></div>21</li>
-                    <li><div class="icon" id="pricetag"></div>900</li>
-                </ul>
-                <div class="buy-button">BUY</div>
-            </div>
-        </div>
+            <li class="clearfix">
+                <div id="photowrap"><img src="images/products/product3.jpg" /></div>
+                <div id="photowrap"><img src="images/products/product4.jpg" /></div>
+                <div id="shelf"></div>
+            </li>
+         
         
-        <div class="productcontainer clearfix">
-        	<div id="photo" ><img src="images/items/bag.jpg" width="175" /></div>
-            
-            <div class="info clearfix">
-            	<div id="title">Shoe by Armani</div>
-                <ul>
-                	<li><div class="icon" id="love"></div>14</li>
-                    <li><div class="icon" id="comment"></div>21</li>
-                    <li><div class="icon" id="pricetag"></div>900</li>
-                </ul>
-                <div class="buy-button">BUY</div>
-            </div>
-        </div>
+         </ul>
+         
+         </div>
+    </div>
         
-        <div class="productcontainer clearfix">
-        	<div id="photo" ><img src="images/items/shoe.jpg" width="175" /></div>
-            
-            <div class="info clearfix">
-            	<div id="title">Shoe by Armani</div>
-                <ul>
-                	<li><div class="icon" id="love"></div>14</li>
-                    <li><div class="icon" id="comment"></div>21</li>
-                    <li><div class="icon" id="pricetag"></div>900</li>
-                </ul>
-                <div class="buy-button">BUY</div>
-            </div>
-        </div>
-	</div><!-- /content -->
-
-	<div data-role="footer">
-	
-	</div><!-- /footer -->
-</div><!-- /page -->
-
-</body>
-</html>
+    <div class="footer">
+        <ul>
+            <a href="#program/1/chat"><li id="chat"></li></a>
+            <a href="#program/1/discussions"><li id="messageboard"></li></a>
+            <a href="#select_channel"><li id="tvguide"></li></a>
+            <a href="#program/1/products"><li id="products"></li></a>
+            <a href="#profile"><li id="profile"></li></a>
+        </ul>
+      </div>
+    
+    
+    </div><!-- /content -->

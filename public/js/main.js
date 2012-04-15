@@ -62,7 +62,7 @@ var AppRouter = Backbone.Router.extend({
                 user_id: self.loggedInUser.get('id')
             });
             discussion.save();
-            window.location = "#program/"+programId+"/show_discussions";
+            window.location = "#program/"+programId+"/discussions";
         }); 
 
         $('#content').on("click", "#add_comment", function(event) {
