@@ -5,6 +5,7 @@ var AppRouter = Backbone.Router.extend({
         "login"                 :   "login",
         "signup"                :   "signup",
         "select_channel"        :   "select_channel",
+        "select_channel_auth"   :   "select_channel_auth",
         "channel/:channel_id"   :   "select_program",        //what is the program id?
         
         "program/:program_id"                   :   "show_program_activity", //what is the channel id? program id? 
@@ -97,11 +98,11 @@ var AppRouter = Backbone.Router.extend({
             if(USING_RAILS_SERVER) {
                 $.ajax({
                     type: 'post',
-                    data: {"user":{"email":model.get('email'),"username":model.get('username'), "password": model.get('password'), "password_confirmation":model.get('password')}},
+                    data: {"user":{"email":email,"username":username, "password": password, "password_confirmation":confirmPassword}},
                     dataType: 'json',
                     url: "/users.json",
                     success: function(response) {
-                        self.loggedInUser = data;
+                        self.loggedInUser = this.data;
                         window.location = "#select_channel"; //redirect
                     },
                     error: function(response) {
@@ -130,7 +131,7 @@ var AppRouter = Backbone.Router.extend({
             if(USING_RAILS_SERVER) {
                 $.ajax({
                     type: 'post',
-                    data: {"user":{"login": this.get('username'), "password": this.get('password')}},
+                    data: {"user":{"login": usernameOrEmail, "password": password}},
                     dataType: 'json',
                     url: "/users/sign_in.json",
                     success: function(response) {
@@ -203,6 +204,24 @@ var AppRouter = Backbone.Router.extend({
         var selectChannelPage = new SelectChannelPage(); 
         this.activePage = selectChannelPage; 
         this.slidePage(this.activePage.render());
+    },   
+
+    select_channel_auth:function() {
+        var self = this;
+            $.ajax({
+              type: 'get',
+              dataType: 'json',
+              url: "/users/edit.json",
+              success: function(response) {
+                debugger;
+              self.loggedInUser = response;
+              window.location = "#select_channel"; //redirect
+            },
+            error: function(response) {
+                     debugger;
+                     alert(response.responseText);
+                   }
+            });
     },   
 
     select_program:function(channel_id_str) {

@@ -1,6 +1,7 @@
 class AuthenticationsController < ApplicationController
+  respond_to :html, :json
   def index
-    @authentications = current_user.authentications if current_user
+    respond_with @authentications = current_user.authentications if current_user
   end
 
   def create
@@ -29,6 +30,14 @@ class AuthenticationsController < ApplicationController
         redirect_to new_user_registration_url
       end
     end
+  end
+  private
+  def sign_in_and_redirect(resource_or_scope, *args)
+    options  = args.extract_options!
+    scope    = Devise::Mapping.find_scope!(resource_or_scope)
+    resource = args.last || resource_or_scope
+    sign_in(scope, resource, options)
+    redirect_to '/#select_channel_auth'
   end
 end
 

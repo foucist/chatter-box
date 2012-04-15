@@ -4,7 +4,7 @@
     <div class="authentications">
       <% for authentication in @authentications %>
         <div class="authentication">
-          <%= image_tag "omniauth/#{authentication.provider}_32.png", :size => "32x32" %>
+          <%= image_tag "/omniauth/#{authentication.provider}_32.png", :size => "32x32" %>
           <div class="provider"><%= authentication.provider_name %></div>
         </div>
       <% end %>
@@ -17,13 +17,7 @@
 <% end %>
 
 
-<a href="/auth/twitter" class="auth_provider">
-  <%= image_tag "omniauth/twitter_64.png", :size => "64x64", :alt => "Twitter" %>
-  Twitter
-</a>
-<a href="/auth/facebook" class="auth_provider">
-  <%= image_tag "omniauth/facebook_64.png", :size => "64x64", :alt => "Facebook" %>
-  Facebook
-</a>
+<%- User.omniauth_providers.each do |provider| %>
+  <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider) %><br />
+<% end -%>
 
-<div class="clear"></div>
