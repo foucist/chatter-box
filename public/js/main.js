@@ -5,6 +5,7 @@ var AppRouter = Backbone.Router.extend({
         "login"                 :   "login",
         "signup"                :   "signup",
         "select_channel"        :   "select_channel",
+        "select_channel_auth"   :   "select_channel_auth",
         "channel/:channel_id"   :   "select_program",        //what is the program id?
         
         "program/:program_id"                   :   "show_program_activity", //what is the channel id? program id? 
@@ -198,6 +199,24 @@ var AppRouter = Backbone.Router.extend({
         var selectChannelPage = new SelectChannelPage(); 
         this.activePage = selectChannelPage; 
         this.slidePage(this.activePage.render());
+    },   
+
+    select_channel_auth:function() {
+        var self = this;
+            $.ajax({
+              type: 'get',
+              dataType: 'json',
+              url: "/users/edit.json",
+              success: function(response) {
+                debugger;
+              self.loggedInUser = response;
+              window.location = "#select_channel"; //redirect
+            },
+            error: function(response) {
+                     debugger;
+                     alert(response.responseText);
+                   }
+            });
     },   
 
     select_program:function(channel_id_str) {

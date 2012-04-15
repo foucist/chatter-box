@@ -4,15 +4,23 @@ class User < ActiveRecord::Base
   has_many :authentications
 
   attr_accessor :login
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me,
-                  :authentication_token, :image, :image_cache, :remove_image
+                  :authentication_token, :image, :image_cache, :remove_image, :id
 
   validates_integrity_of  :image
   validates_processing_of :image
 
   devise :database_authenticatable, :registerable,  :trackable, 
          :recoverable, :rememberable, :omniauthable, :authentication_keys => [:login]
+
+  # backbone side
+  #validates_presence_of   :email, :if => :email_required?
+  validates_uniqueness_of :email, :allow_blank => true, :if => :email_changed?
+  validates_format_of     :email, :with  => /\A[^@]+@[^@]+\z/, :allow_blank => true, :if => :email_changed?
+
+  validates_presence_of     :password
+  validates_confirmation_of :password
+  validates_length_of       :password, :within => 6..16, :allow_blank => true
 
   def password_required?; false; end
 
@@ -49,14 +57,16 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      case session["omniauth"]['provider']
-      when 'facebook'
-        if data = session["omniauth"] && session["omniauth"]["extra"]["raw_info"]
-          user.email = data["email"]
-        end
-      when 'twitter'
-        if data = session["omniauth"]["info"]
-          user.username = data["nickname"]
+      if (session["omniauth"] rescue false)
+        case session["omniauth"]['provider']
+        when 'facebook'
+          if data = session["omniauth"] && session["omniauth"]["extra"]["raw_info"]
+            user.email = data["email"]
+          end
+        when 'twitter'
+          if data = session["omniauth"]["info"]
+            user.username = data["nickname"]
+          end
         end
       end
     end
