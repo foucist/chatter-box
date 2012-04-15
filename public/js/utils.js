@@ -32,10 +32,23 @@ store = {
     discussions: {},
     comments: {},
     users: {},
+    checkins: {},
 
     populate: function() {
-        this.users[1] = {id: 5, username: 'a', email: 'akavin@gmail.com', password: 'a', img:"mickey.png", fb_auth_token:"ssdd", tw_auth_token:"ddss"};
+        this.users[1] = {id: 1, username: 'a', email: 'akavin@gmail.com', password: 'a', img:"mickey.png", fb_auth_token:"ssdd", tw_auth_token:"ddss"};
         this.users[2] = {id: 2, username: 'b', email: 'james@canada.com', password: 'b', img:"jamies.png", fb_auth_token:"ffgg", tw_auth_token:"ggff"};
+        this.users[2] = {id: 3, username: 'c', email: 'reefs@cctb.com', password: 'c', img:"jamies.png", fb_auth_token:"ffgg", tw_auth_token:"ggff"};
+
+        this.checkins[1] = {id: 1, user_id: 1, program_id: 3, check_in_time: Date.now()};
+        this.checkins[2] = {id: 2, user_id: 1, program_id: 2, check_in_time: Date.now()};
+        this.checkins[3] = {id: 3, user_id: 2, program_id: 1, check_in_time: Date.now()};
+        this.checkins[4] = {id: 4, user_id: 2, program_id: 2, check_in_time: Date.now()};
+        this.checkins[5] = {id: 5, user_id: 3, program_id: 1, check_in_time: Date.now()};
+        this.checkins[6] = {id: 6, user_id: 4, program_id: 1, check_in_time: Date.now()};
+        this.checkins[7] = {id: 7, user_id: 5, program_id: 2, check_in_time: Date.now()};
+        this.checkins[8] = {id: 8, user_id: 6, program_id: 3, check_in_time: Date.now()};
+        this.checkins[9] = {id: 9, user_id: 7, program_id: 1, check_in_time: Date.now()};
+        this.checkins[10] = {id: 10, user_id: 8, program_id: 4, check_in_time: Date.now()};
 
         this.programs[1] = {id: 1, channel_id: 1,program: "Dok Som See Thong", tagline: "second scene", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
         this.programs[2] = {id: 2, channel_id: 1,program: "Who want to be the millionaire?", tagline: "Jackpot round", start_time: null, end_time: null, updated_at: (new Date()).getDate()-4};
@@ -163,7 +176,7 @@ store = {
                                        password: userModel.get('password'), 
                                        email: userModel.get('email')
                                    };
-        return "duplicate email..try again";
+        return "success";
     },
 
     authenticateAccount: function(usernameOrEmail, password) {
@@ -175,6 +188,27 @@ store = {
             }
         }
         return false;
+    },
+
+    //checkin stuff
+    findByProgramId: function(programId) {
+        var results = [];
+        for (var id in this.checkins) {
+            if ( this.checkins[id].program_id === programId) {
+                results.push(this.checkins[id]);
+            }
+        }
+        return results;
+    },
+
+    findByUserId: function(userId) {
+        var results = [];
+        for (var id in this.checkins) {
+            if ( this.checkins[id].user_id === userId) {
+                results.push(this.checkins[id]);
+            }
+        }
+        return results;
     }
 }
 

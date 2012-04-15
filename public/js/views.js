@@ -91,6 +91,10 @@ window.ShowProgramActivityPage = Backbone.View.extend({
     //this.model is a collection here
     render:function (eventName) {
         $(this.el).html(this.template(this.model.toJSON()));
+        $("#checkin", this.el).click(function(){
+            $(".type_checkin #checkin", this.el).toggle();
+            $(".type_checkin .notification", this.el).toggle();
+        }); 
         return this;
     },
 });

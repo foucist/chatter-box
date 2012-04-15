@@ -1,6 +1,20 @@
 //Model
 USING_RAILS_SERVER = false;
 
+window.CheckIn = Backbone.Model.extend({
+    
+    defaults: function() {
+        return {
+            user_id: -1,
+            program_id: -1,
+            check_in_time: null,
+            deleted: false,
+            updated_at: null,
+            created_at: null
+        };
+    },
+});
+
 window.User = Backbone.Model.extend({
     validate: function(attrs) {
         if(attrs.username==="") {
@@ -14,44 +28,6 @@ window.User = Backbone.Model.extend({
         }
     },
 
-    login: function() {
-        
-        var isLoggedIn = false;
-        if(USING_RAILS_SERVER) { 
-            //return isLoggedIn boolean 
-            alert("TODO: link with Rails: create a new user"); 
-        } else {
-            isLoggedIn = store.authenticateAccount(this.get('username'),this.get('password'));
-        }
-        return isLoggedIn;
-    }, 
-
-    sync: function (method, model, options) {
-        switch (method) {
-            case "read":
-                alert("reading data from the server")
-                break;
-            case "update":
-                alert("update something");
-                break;
-            case "create":
-                //get the data and verify whether it is successfully loggin or not
-                var result = "FAILED"
-                if(USING_RAILS_SERVER) { 
-                    //return 'success' or an error message and set it to result
-                    alert("TODO: link with Rails: create a new user"); 
-                } else {
-                    result = store.createAccount(model);
-                }
-
-                if(result === "success")
-                   options.success(model);
-                else 
-                    options.error(model,"ERROR MESSAGE HERE: "+result);
-                break;
-        }
-    },
-
     defaults: function() {
         return {
             username: "",
@@ -59,7 +35,10 @@ window.User = Backbone.Model.extend({
             password: "",
             img: "",
             fb_auth_token: "",
-            tw_auth_token: ""
+            tw_auth_token: "",
+            deleted: false,
+            updated_at: null,
+            created_at: null
         };
     },
 });
@@ -69,6 +48,8 @@ window.Program = Backbone.Model.extend({
     sync: function (method, model, options) {
         switch (method) {
             case "read":
+                model.set("num_checkins",13254); 
+                model.set("num_friends", 14);
                 options.success(model);
                 break;
             case "update":
@@ -86,8 +67,11 @@ window.Program = Backbone.Model.extend({
             program: "",
             tagline: "",
             img: "",
+            num_checkins: 0,
+            num_friends: 0,
             start_time: null,
             end_time: null,
+            deleted: false,
             updated_at: null,
             created_at: null
         };
@@ -126,8 +110,8 @@ window.Discussion = Backbone.Model.extend({
         return {
             program_id: -1,
             discussion: "",
-            deleted: false,
             user_id: -1,
+            deleted: false,
             updated_at: null,
             created_at: null
         };
@@ -160,8 +144,8 @@ window.Comment = Backbone.Model.extend({
             discussion_id: -1,
             comment: "",
             reply_to_comment_id: -1,
-            deleted: false,
             user_id: -1,
+            deleted: false,
             updated_at: null,
             created_at: null
         };
@@ -264,6 +248,43 @@ window.CommentsCollection = Backbone.Collection.extend({
 
     findByName:function (key) {
         this.reset(store.findByName(key));
+    }
+});
+
+window.CheckInsCollection = Backbone.Collection.extend({
+    model: CheckIn,
+    program_id: -1,
+    user_id: -1,
+    
+    initialize:function (program_id, user_id) {
+ 
+    },
+
+    sync: function (method, model) {
+      var self = this;
+        switch (method) {
+            case "read":
+            if(USING_RAILS_SERVER) {
+                alert("pull checkin data");
+            } else {
+                alert("get checkIn data");
+            }
+            break;
+            case "update":
+                alert("checkIn collection update");
+                break;
+            case "create":
+                alert("checkIn collection create");           
+                break;
+        }
+    },
+
+    findByProgramId:function (key) {
+        alert("find checkIn by programId");
+    },
+
+    findByUserId:function (key) {
+        alert("find checkIn by userId");
     }
 });
 
