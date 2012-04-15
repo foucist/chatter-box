@@ -1,9 +1,10 @@
 class TwitterController < ApplicationController
-  #layout 'application', :except => :tweet
+  respond_to :html, :json
+  #before_filter :confirm_twitter_auth
   before_filter :set_twitter_keys
 
   def index
-    @tweets = Twitter.search("#entourage", :rpp => 10)
+    respond_with @tweets = Twitter.search("#entourage", :rpp => 10)
   end
 
   def create
@@ -14,10 +15,19 @@ class TwitterController < ApplicationController
   end
 
   private
-  def set_twitter_keys
-    Twitter.configure do |config|
-      config.oauth_token = current_user.authentications.first.token
-      config.oauth_token_secret = current_user.authentications.first.secret
+  def confirm_twitter_auth
+    unless current_user.authentications.find_by_provider('twitter')
+      redirect_to omniauth_authorize_path(:user, :twitter)
     end
   end
+
+  def set_twitter_keys
+    Twitter.configure do |config|
+      if twitter_keys = current_user.authentications.find_by_provider('twitter')
+        config.oauth_token = twitter_keys.token
+        config.oauth_token_secret = twitter_keys.secret
+      end
+    end
+  end
+
 end
