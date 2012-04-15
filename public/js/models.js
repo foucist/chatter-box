@@ -48,8 +48,9 @@ window.Program = Backbone.Model.extend({
     sync: function (method, model, options) {
         switch (method) {
             case "read":
-                model.set("num_checkins",13254); 
-                model.set("num_friends", 14);
+                var usersCheckIns = store.findByProgramId(model.id);
+                model.get('checkInsCollection').reset(usersCheckIns);
+                model.set("num_friends", 24);
                 options.success(model);
                 break;
             case "update":
@@ -67,8 +68,8 @@ window.Program = Backbone.Model.extend({
             program: "",
             tagline: "",
             img: "",
-            num_checkins: 0,
-            num_friends: 0,
+            checkInsCollection: new CheckInsCollection(),
+            num_friends: 0, //<-- will have to be friendsCollection
             start_time: null,
             end_time: null,
             deleted: false,

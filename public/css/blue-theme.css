@@ -184,6 +184,9 @@ li{
 	height:120px;
 	position:relative;
 }
+.program-list li:active{
+	background: #9F9F9F; /* Chrome10+,Safari5.1+ */
+}
 #photowrap{
 	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(244,244,244,1) 29%,rgba(219,219,219,1) 72%,rgba(208,208,208,1) 100%);
 	width:132px;
@@ -296,7 +299,6 @@ li{
 	text-shadow:0 1px 3px rgba(0,0,0,.50);
 }
 .type_checkin .notification{
-  display:none;
   margin-top:-10px;
 }
 #checkin:active{
@@ -323,6 +325,9 @@ li{
 .menu #polls{
 	background-position:-400px 0;
 }
+.menu .glow .icon{
+	background-position-y:-100px !important;
+}
 .menu li:active{
 	color:#9F9F9F;
 	text-shadow:0 1px 0 rgba(0,0,0,.09);
@@ -335,6 +340,12 @@ li{
 	text-align:center;
 	float:left;
 	margin:20px 20px 10px 20px;
+}
+.menu li.glow{
+	color:white;
+}
+.menu li:active{
+	color:#CCC;
 }
 /* MESSAGE BOARD
 ----------------------------------------------------------------------------------------------------*/
@@ -1283,8 +1294,8 @@ input, textarea{
     -webkit-transition-duration: .375s;
     -o-transition-duration: .375s;
 }
-/* * {
+ * {
     -webkit-touch-callout: none;
-    -webkit-user-select: none; /* Disable selection/Copy of UIWebView
+   /*  -webkit-user-select: none; Disable selection/Copy of UIWebView*/
 }
- */
+ 

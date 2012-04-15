@@ -9,9 +9,9 @@ var AppRouter = Backbone.Router.extend({
         "channel/:channel_id"   :   "select_program",        //what is the program id?
         
         "program/:program_id"                   :   "show_program_activity", //what is the channel id? program id? 
-        "program/:program_id/show_discussions"  :   "show_discussions",    //what show id this message board for?
-        "program/:program_id/show_merchandise"  :   "show_merchandise", 
-        "program/:program_id/show_chat"         :   "show_chat",
+        "program/:program_id/discussions"  :   "show_discussions",    //what show id this message board for?
+        "program/:program_id/products"  :   "show_products", 
+        "program/:program_id/chat"         :   "show_chat",
 
         "discussions/:program_id/add"       :   "add_discussion", 
         "discussion/:discussion_id"         :   "show_comments", 
@@ -26,7 +26,7 @@ var AppRouter = Backbone.Router.extend({
         // (left or right) of the sliding transition between pages.
         this.pageHistory = [];
         this.activePage = null;
-        this.loggedInUser = null;
+        this.loggedInUser = new User({id:1, username:'titaniummick',email:'mickey@mouse.com'});
 
         // Register event listener for back button throughout the app
         $('#content').on('click', '.header-back-button', function(event){
@@ -62,7 +62,7 @@ var AppRouter = Backbone.Router.extend({
                 user_id: self.loggedInUser.get('id')
             });
             discussion.save();
-            window.location = "#program/"+programId+"/show_discussions";
+            window.location = "#program/"+programId+"/discussions";
         }); 
 
         $('#content').on("click", "#add_comment", function(event) {
@@ -163,10 +163,15 @@ var AppRouter = Backbone.Router.extend({
                 } else {
                     alert("dude...you can't remember your password?");
                 }
-            }
-            
-        }); 
-        
+            } 
+        });
+
+        //checking in 
+        $('#content').on("click", "#checkin", function(event) {
+            event.preventDefault();
+            var program_id = parseInt($('#spa_programIdStr').val());
+            store.createNewCheckin(self.loggedInUser.get('id'),program_id)
+        });
     },
 
     selectItem:function(event) {
@@ -230,6 +235,16 @@ var AppRouter = Backbone.Router.extend({
         this.slidePage(this.activePage.render());
     },   
 
+    //helper function
+    hasUserCheckedIn: function(checkedInUsers,loggedInUser) {
+        for (var id in checkedInUsers) {
+            if ( checkedInUsers[id].get('user_id') === loggedInUser.get('id')) {
+                return true;
+            }
+        }
+        return false;
+    }, 
+
     show_program_activity:function(program_id_str) {
         var self = this;
         var program_id = parseInt(program_id_str);
@@ -237,7 +252,8 @@ var AppRouter = Backbone.Router.extend({
         var program = new Program({id: program_id});
         program.fetch( {
             success:function (data) {
-                var showProgramActivityPage = new ShowProgramActivityPage({model:data});
+                var isUserCheckedIn = self.hasUserCheckedIn(data.get('checkInsCollection').models,self.loggedInUser);
+                var showProgramActivityPage = new ShowProgramActivityPage({model:data, isUserCheckedIn:isUserCheckedIn});
                 self.activePage = showProgramActivityPage;
                 self.slidePage(self.activePage.render());
             }
@@ -288,9 +304,9 @@ var AppRouter = Backbone.Router.extend({
         });
     },   
 
-    show_merchandise:function(program_id_str) {
+    show_products:function(program_id_str) {
         var self = this;
-        this.slidePage(new ShowMerchandisePage().render());
+        this.slidePage(new ShowProductsPage().render());
     },   
 
     show_chat:function(program_id_str) {
@@ -351,7 +367,7 @@ var AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     tpl.loadTemplates(  [ 'login','signup','select_channel','select_program','show_program_activity', 
                           'show_discussions', 'discussion-list-item','show_comments', 'comment-list-item',
-                          'show_program_merchandise', 'show_chat', 'add_discussion', 'program-list-item'
+                          'show_products', 'show_chat', 'add_discussion', 'program-list-item'
                         ],
         function () {
             app = new AppRouter();

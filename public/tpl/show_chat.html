@@ -1,66 +1,51 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<meta charset="utf-8" />
-	<head> 
-	<title>Program Select</title> 
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<div class="type_groupchat">
 
-	<link rel="stylesheet" href="css/jquery.mobile-1.1.0-rc.1.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
-	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/jquery.mobile-1.1.0-rc.1.min.js"></script>
-</head> 
-<body class="livechat_page"> 
-
-<div data-role="page">
-
-	<div data-role="header" data-position="fixed">
-    	<a data-icon="arrow-l" data-rel="back">Back</a>
-        <h1>LIVE CHAT</h1>
- 
-		
-	</div><!-- /header -->
-	
-    <style>
-	
-	</style>
-	<div class="chatbox" data-role="content">	
-		<ul>
-        	<li class="clearfix">
-            	<div id="photo"><img src="images/profile/profile1.jpg" /></div>
-                <div id="comment">I love this show too!</div>
-            </li>
-            <li class="clearfix">
-            	<div id="photo"><img src="images/profile/profile2.jpg" /></div>
-                <div id="comment">I love this show too! I love this show too! I love this show too! I love this show too! I love this show too! I love this show too!</div>
-            </li>
-            <li class="clearfix">
-            	<div id="photo"><img src="images/profile/profile1.jpg" /></div>
-                <div id="comment">I love this show too!</div>
-            </li>
-            <li class="clearfix">
-            	<div id="photo"><img src="images/profile/profile2.jpg" /></div>
-                <div id="comment">I love this show too!</div>
-            </li>
+  <div class="header bluegradient">
+      <a href="javascript: history.go(-1)"><div id="back"></div></a>
+      <h1>Group Chat</h1>
         
-        
+      <ul class="pagetab bluegradient clearfix">
+          <li class="selected"><a href="groupchat_twitter.html"><div id="twitter"></div></a></li>
+            <li><a href="groupchat.html"><div id="friends"></div></a></li>
         </ul>
+  </div><!-- /header -->
+  
+  <div id="wrapper">
+        <div id="scroller">
+   
+         <div class="toolbar topindent">
+              <h3><small>You are watching</small>White Collar</h3>
+              <div id="dropdown"></div>
+         </div>
+         <div class="toolbar">
+              <div id="online"></div>
+              <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+              <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+              <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+         </div>
+         
+         <ul class="chatarea">
+              <li class="clearfix">
+                  <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+                  <div id="bubble">Yeah, you're right! #WhiteCollar</div>
+              </li>
+              <li class="clearfix user">
+                  <div id="photowrap"><img src="images/profile/profile2.jpg" /></div>
+                  <div id="bubble">I can't believe it either! I thought he was trying to be someone else. #WhiteCollar</div>
+              </li>
+              <li class="clearfix">
+                  <div id="photowrap"><img src="images/profile/profile1.jpg" /></div>
+                  <div id="bubble">What happened to Vince? #WhiteCollar</div>
+              </li>
+         </ul>
         
-	</div><!-- /content -->
-
-	<div data-role="footer" data-position="fixed">
-        <div data-role="fieldcontain">
-        	<input type="text" name="name" id="name" placeholder="type here..." value=""  />
+        
         </div>
-        <div data-role="navbar">
-	<ul>
-		<li><a href="a.html" class="ui-btn-active">Tweets</a></li>
-		<li><a href="b.html">Group Chat</a></li>
-	</ul>
-</div><!-- /navbar -->
-	</div><!-- /footer -->
-</div><!-- /page -->
-
-</body>
-</html>
+     </div>
+    <div class="footer">
+      <input class="chatterbox" placeholder="type here..." />
+        <div id="optionbutton">Send</div>
+    </div>
+    
+    
+  </div><!-- /content -->

@@ -22,7 +22,7 @@
                         
                         <ul id="stats">
                             <li class="icon" id="people"></li>
-                            <li><%= num_checkins %></li>
+                            <li><%= checkInsCollection.length %></li>
                             <li class="icon" id="friends"></li>
                             <li><%= num_friends %></li>
                             <li id="channel">NBC</li>
@@ -34,29 +34,29 @@
            <style>
       
        </style>
-           
+
            <div class="menu clearfix">
+                <input type="hidden" id="spa_programIdStr" value="<%= id %>" />
                 <div id="checkin">Check-in</div>
-                <div class="notification">You've checked in!</div>
+                <div class="notification" style="display:none;">You've checked in!</div>
                 <ul>
-                    <a href="groupchat.html"><li><div class="icon" id="chat"></div>Group Chat</li></a>
-                    <a href="products.html"><li><div class="icon" id="products"></div>Cool Products</li></a>
-                    <a href="messageboard.html"><li><div class="icon" id="messageboard"></div>Message Board</li></a>
-                    <a href="polls.html"><li><div class="icon" id="polls"></div>Voting & Polls</li></a>
+                    <a href="#program/<%= id %>/show_chat"><li><div class="icon" id="chat"></div>Group Chat</li></a>
+                    <a href="#program/<%= id %>/products"><li><div class="icon" id="products"></div>Cool Products</li></a>
+                    <a href="#program/<%= id %>/discussions"><li><div class="icon" id="messageboard"></div>Message Board</li></a>
+                    <a href="#program/<%= id %>/poll"><li><div class="icon" id="polls"></div>Voting & Polls</li></a>
                 </ul>
-                    
            </div>
-        
+            
       </div>
     </div>
         
     <div class="footer">
       <ul>
-          <a href="groupchat.html"><li id="chat"></li></a>
-          <a href="messageboard.html"><li id="messageboard"></li></a>
-          <a href="channel_select.html"><li id="tvguide"></li></a>
-          <a href="products.html"><li id="products"></li></a>
-          <a href="profile.html"><li id="profile"></li></a>
+          <a href="#program/1/chat"><li id="chat"></li></a>
+          <a href="#program/1/discussions"><li id="messageboard"></li></a>
+          <a href="#select_channel"><li id="tvguide"></li></a>
+          <a href="#program/1/products"><li id="products"></li></a>
+          <a href="#profile"><li id="profile"></li></a>
       </ul>
     </div>
     
