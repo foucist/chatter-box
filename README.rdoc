@@ -1,3 +1,8 @@
+heroku create (unless you already have one in .git/config file)
+git push heroku master
+heroku run db:setup (will migrate & seed the db)
+thor deploy:production:config  (passes in the twitter/facebook keys from heroku.yml file)
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
