@@ -12,7 +12,7 @@ tpl = {
         $.each(names, function(index, name) {
             deferreds.push( $.get('tpl/' + name + '.html', function(data) {
                 self.templates[name] = data;
-            }));
+            }, 'html'));
         });
 
         $.when.apply(null, deferreds).done(callback);
