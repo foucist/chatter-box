@@ -1,0 +1,25 @@
+apps:
+  staging: chatter-box-staging
+  production: chatter-box
+development: &defaults
+  domain_url: http://localhost:3000
+  facebook_key: 
+  facebook_secret:
+  twitter_key: 
+  twitter_secret: 
+test:
+  <<: *defaults
+staging:
+  bundle_without: development:test
+  domain_url: http://chatter-box-staging.herokuapp.com
+  facebook_key: 
+  facebook_secret:
+  twitter_key:
+  twitter_secret:
+production:
+  bundle_without: development:test
+  domain_url: http://chatter-box.herokuapp.com
+  facebook_key: 
+  facebook_secret:
+  twitter_key:
+  twitter_secret: 
